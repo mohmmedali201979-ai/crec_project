@@ -3,189 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREC | منصة المشاهدة</title>
+    <title>CREC | منصة المشاهدة الاحترافية</title>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-bg: #0b0e11;
-            --card-bg: #1b1f23;
+            --main-bg: #05070a;
+            --card-bg: #111418;
             --accent-blue: #00adef;
-            --accent-red: #ff0000;
-            --exclusive-gold: #c5a059;
-            --text-gray: #b1b1b1;
+            --accent-red: #e50914;
+            --gold: #c5a059;
+            --gray-text: #a0a0a0;
         }
 
         body {
             font-family: 'Almarai', sans-serif;
             margin: 0; background-color: var(--main-bg); color: white;
-            overflow-x: hidden;
+            overflow-x: hidden; scroll-behavior: smooth;
         }
 
-        /* القائمة الجانبية (مثل الجزيرة 360) */
-        .sidebar {
-            position: fixed; top: 0; right: -280px; width: 280px; height: 100%;
-            background-color: #050505; z-index: 2000; transition: 0.4s;
-            padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-        }
-        .sidebar.active { right: 0; }
-        .sidebar-item { padding: 15px 10px; border-bottom: 1px solid #1a1a1a; cursor: pointer; color: white; display: block; text-decoration: none; }
-        .sidebar-item:hover { background-color: #111; color: var(--accent-blue); }
-
+        /* القائمة العلوية الشفافة */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; position: fixed; width: 90%; top: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); z-index: 1000;
+            padding: 20px 6%; position: fixed; width: 88%; top: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            z-index: 2000; transition: 0.4s;
         }
 
-        .live-btn { background: var(--accent-red); padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
-        .logo { font-weight: 800; font-size: 1.8rem; letter-spacing: 1px; }
+        .logo { font-weight: 900; font-size: 1.8rem; color: white; text-decoration: none; }
         .logo span { color: var(--accent-blue); }
 
-        /* Hero Carousel (شريط التمرير العلوي) */
-        .hero {
-            position: relative; height: 80vh; width: 100%; overflow: hidden;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 0 5% 60px;
+        .header-tools { display: flex; align-items: center; gap: 20px; }
+        .live-tag {
+            background: var(--accent-red); color: white; padding: 4px 12px;
+            border-radius: 4px; font-weight: 800; font-size: 0.75rem;
+            display: flex; align-items: center; gap: 6px;
         }
-        #bg-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; z-index: -2; transform: translate(-50%, -50%); object-fit: cover; }
-        .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--main-bg) 10%, transparent 60%); z-index: -1; }
 
-        .hero h1 { font-size: 2.2rem; margin: 0; font-weight: 800; }
-        .hero p { color: var(--text-gray); max-width: 450px; margin: 10px 0; font-size: 0.95rem; }
-        .btn-main { background: #00adef; color: white; border: none; padding: 12px 40px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        /* قسم الغلاف العملاق (Hero) */
+        .hero {
+            position: relative; height: 95vh; width: 100%;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 0 6%; overflow: hidden;
+        }
 
-        /* الأقسام والمحتوى */
-        .content-container { padding-bottom: 100px; }
-        .section-row { padding: 25px 5% 0; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .section-title { font-size: 1.2rem; font-weight: 800; border-right: 4px solid var(--accent-blue); padding-right: 10px; }
-        
-        .slider { display: flex; overflow-x: auto; gap: 15px; scrollbar-width: none; padding: 10px 0; }
+        #bg-video {
+            position: absolute; top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%; z-index: -2;
+            transform: translate(-50%, -50%); object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(75deg, var(--main-bg) 25%, transparent 60%),
+                        linear-gradient(to top, var(--main-bg) 5%, transparent 40%);
+            z-index: -1;
+        }
+
+        .hero-content { max-width: 650px; z-index: 10; }
+        .hero-content h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; font-weight: 800; }
+        .hero-content p { font-size: 1.2rem; color: #ccc; margin-bottom: 30px; line-height: 1.6; }
+
+        .btn-group { display: flex; gap: 15px; }
+        .btn {
+            padding: 14px 35px; border-radius: 6px; font-weight: 800;
+            font-size: 1.1rem; cursor: pointer; border: none; transition: 0.3s;
+        }
+        .btn-blue { background: var(--accent-blue); color: white; }
+        .btn-outline { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
+        .btn:hover { transform: scale(1.05); }
+
+        /* تنظيم المحتوى (الصفوف) */
+        .content-main { padding: 40px 0 120px; position: relative; margin-top: -80px; }
+
+        .section-row { margin-bottom: 45px; padding: 0 6%; }
+        .row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .row-title { font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .row-title::before { content: ""; width: 5px; height: 25px; background: var(--accent-blue); border-radius: 2px; }
+
+        .slider {
+            display: flex; overflow-x: auto; gap: 18px;
+            scrollbar-width: none; padding: 10px 0;
+        }
         .slider::-webkit-scrollbar { display: none; }
 
-        /* كرت برامج (طولي) */
-        .card-v { min-width: 160px; height: 240px; border-radius: 10px; overflow: hidden; position: relative; background: var(--card-bg); flex-shrink: 0; }
-        .card-v img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* كرت أفلام/وثائقيات (عرضي) */
-        .card-h { min-width: 280px; height: 160px; border-radius: 10px; overflow: hidden; position: relative; background: var(--card-bg); flex-shrink: 0; }
-        .card-h img { width: 100%; height: 100%; object-fit: cover; }
+        /* كروت متنوعة (مثل تصميمك المرفق) */
+        .card {
+            min-width: 180px; height: 270px; background: var(--card-bg);
+            border-radius: 12px; overflow: hidden; position: relative;
+            transition: 0.4s; border: 1px solid #222; flex-shrink: 0;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-blue); box-shadow: 0 10px 30px rgba(0,173,239,0.3); }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-info { position: absolute; bottom: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); font-size: 0.85rem; font-weight: bold; }
-        .badge-new { background: var(--accent-blue); color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 2px; position: absolute; top: 10px; left: 10px; }
+        .card-wide { min-width: 320px; height: 180px; }
+
+        .card-info {
+            position: absolute; bottom: 0; width: 100%; padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+        }
+        .card-info h4 { margin: 0; font-size: 0.9rem; font-weight: 700; }
+
+        .badge {
+            position: absolute; top: 12px; left: 12px;
+            background: var(--accent-blue); color: white;
+            font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 800;
+        }
 
         /* التنقل السفلي */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; background: rgba(11,14,17,0.98);
-            display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1000;
+        .nav-bottom {
+            position: fixed; bottom: 0; width: 100%;
+            background: rgba(5,7,10,0.95); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-around; padding: 15px 0;
+            border-top: 1px solid #1a1a1a; z-index: 3000;
         }
-        .nav-link { color: #888; text-decoration: none; text-align: center; font-size: 0.75rem; }
-        .nav-link.active { color: white; }
-        .nav-link i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .nav-item { color: #777; text-decoration: none; text-align: center; font-size: 0.8rem; }
+        .nav-item.active { color: white; }
+        .nav-item i { font-size: 1.5rem; display: block; margin-bottom: 5px; }
 
     </style>
 </head>
 <body>
 
-    <div class="sidebar" id="sidebar">
-        <h3 style="color: var(--accent-blue);">الإعدادات</h3>
-        <a class="sidebar-item">المفضلة</a>
-        <a class="sidebar-item">سجل التصفح</a>
-        <a class="sidebar-item">سياسة الخصوصية</a>
-        <a class="sidebar-item">مركز خدمة العملاء</a>
-        <a class="sidebar-item" style="color: var(--accent-red);">تسجيل الخروج</a>
-    </div>
-
-    <header>
-        <div class="live-btn"><span>●</span> البث المباشر</div>
+    <header id="main-header">
         <div class="logo">C<span>REC</span></div>
-        <div style="font-size: 1.6rem; cursor: pointer;" onclick="toggleSidebar()">☰</div>
+        <div class="header-tools">
+            <div class="live-tag"><span>●</span> مباشر</div>
+            <div style="font-size: 1.5rem; cursor: pointer;">🔍</div>
+            <div style="font-size: 1.5rem; cursor: pointer;">☰</div>
+        </div>
     </header>
 
-    <div class="content-container">
+    <section class="hero">
+        <video autoplay muted loop playsinline id="bg-video" poster="hero.jpg">
+            <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
         
-        <section class="hero">
-            <video autoplay muted loop playsinline id="bg-video">
-                <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
-            </video>
-            <div class="video-overlay"></div>
-            <div class="badge-new" style="font-size: 0.8rem; top: auto; bottom: 180px;">جديد</div>
-            <h1>الملف 404: تحقيقات رقمية</h1>
-            <p>سلسلة وثائقية تكشف خفايا الجرائم السيبرانية وأحدث أنظمة التشفير العالمية لعام 2026.</p>
-            <button class="btn-main">شاهد الآن</button>
-        </section>
-
-        <div class="section-row">
-            <div class="section-header">
-                <div class="section-title">أعمال CREC الأصلية</div>
+        <div class="hero-content">
+            <p style="color: var(--accent-blue); font-weight: 800; margin-bottom: 10px;">انتاج حصري لعام 2026</p>
+            <h1>تحقيقات الخط الأحمر:<br>أسرار لم تنشر من قبل</h1>
+            <p>سلسلة وثائقية مكثفة تستعرض أحدث ملفات الجريمة السيبرانية بأسلوب سينمائي مبهر يعتمد على أحدث تقنيات الجرافيك.</p>
+            <div class="btn-group">
+                <button class="btn btn-blue">▶ شاهد الآن</button>
+                <button class="btn btn-outline">＋ قائمتي</button>
             </div>
+        </div>
+    </section>
+
+    <div class="content-main">
+        
+        <div class="section-row">
+            <div class="row-header"><div class="row-title">أعمال CREC الأصلية</div></div>
             <div class="slider">
-                <div class="card-v">
-                    <div class="badge-new">حلقة جديدة</div>
+                <div class="card">
+                    <div class="badge">جديد</div>
                     <img src="redline.jpg" alt="">
-                    <div class="card-info">الخط الأحمر</div>
+                    <div class="card-info"><h4>الخط الأحمر: الجزء 2</h4></div>
                 </div>
-                <div class="card-v">
+                <div class="card">
                     <img src="podcast.jpg" alt="">
-                    <div class="card-info">البودكاست</div>
+                    <div class="card-info"><h4>بودكاست: خفايا الجريمة</h4></div>
                 </div>
-                <div class="card-v">
-                    <div class="badge-new">جديد</div>
+                <div class="card">
+                    <div class="badge">حصري</div>
                     <img src="2.png" alt="">
-                    <div class="card-info">الملف 404</div>
+                    <div class="card-info"><h4>وثائقي: الملف 404</h4></div>
                 </div>
-                <div class="card-v">
+                <div class="card">
                     <img src="hero.jpg" alt="">
-                    <div class="card-info">وثائقي خاص</div>
+                    <div class="card-info"><h4>خلف الكواليس</h4></div>
                 </div>
             </div>
         </div>
 
         <div class="section-row">
-            <div class="section-title">برامج حوارية</div>
+            <div class="row-header"><div class="row-title">أفلام وثائقية مختارة</div></div>
             <div class="slider">
-                <div class="card-h">
-                    <img src="podcast.jpg" alt="">
-                    <div class="card-info">المقابلة: خفايا التحقيق</div>
-                </div>
-                <div class="card-h">
+                <div class="card card-wide">
+                    <div class="badge">الأكثر مشاهدة</div>
                     <img src="hero.jpg" alt="">
-                    <div class="card-info">طاولة النقاش المستديرة</div>
+                    <div class="card-info"><h4>أمن البيانات: معركة الوجود</h4></div>
+                </div>
+                <div class="card card-wide">
+                    <img src="2.png" alt="">
+                    <div class="card-info"><h4>الذكاء الاصطناعي في التحقيق</h4></div>
                 </div>
             </div>
         </div>
 
         <div class="section-row">
-            <div class="section-title">السلاسل الوثائقية</div>
+            <div class="row-header"><div class="row-title">برامج رمضان 2026</div></div>
             <div class="slider">
-                <div class="card-v">
-                    <img src="2.png" alt="">
-                    <div class="card-info">الأدلة الجنائية</div>
+                <div class="card">
+                    <img src="podcast.jpg" alt="">
+                    <div class="card-info"><h4>مجالس العلم والتحقيق</h4></div>
                 </div>
-                <div class="card-v">
+                <div class="card">
                     <img src="redline.jpg" alt="">
-                    <div class="card-info">سلاسل سياسية</div>
+                    <div class="card-info"><h4>قصص من التاريخ الجنائي</h4></div>
                 </div>
-                <div class="card-v">
+                <div class="card">
                     <img src="hero.jpg" alt="">
-                    <div class="card-info">الميدان</div>
+                    <div class="card-info"><h4>الميدان الرمضاني</h4></div>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <div class="bottom-nav">
-        <a class="nav-link active"><span>🏠</span> الرئيسية</a>
-        <a class="nav-link"><span>🔍</span> البحث</a>
-        <a class="nav-link"><span>🌙</span> رمضان</a>
-        <a class="nav-link"><span>👤</span> حسابي</a>
+    <div class="nav-bottom">
+        <a class="nav-item active"><span>🏠</span>الرئيسية</a>
+        <a class="nav-item"><span>🔍</span>البحث</a>
+        <a class="nav-item" style="color: var(--gold);"><span>🌙</span>رمضان</a>
+        <a class="nav-item"><span>👤</span>حسابي</a>
     </div>
-
-    <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-    </script>
 
 </body>
 </html>
