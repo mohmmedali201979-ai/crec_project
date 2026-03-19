@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+[12:47 ص، 2026/3/20] Mohmmed Abu hatem: <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -217,6 +217,201 @@
         <a class="nav-item" style="color: var(--gold);"><span>🌙</span>رمضان</a>
         <a class="nav-item"><span>👤</span>حسابي</a>
     </div>
+
+</body>
+</html>
+[12:49 ص، 2026/3/20] Mohmmed Abu hatem: <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREC | منصة المشاهدة الاحترافية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #05070a;
+            --card-bg: #111418;
+            --accent-blue: #00adef;
+            --accent-red: #e50914;
+            --gold: #c5a059;
+        }
+
+        body {
+            font-family: 'Almarai', sans-serif;
+            margin: 0; background-color: var(--main-bg); color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 6%; position: fixed; width: 88%; top: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            z-index: 1000;
+        }
+
+        .logo { font-weight: 900; font-size: 1.8rem; }
+        .logo span { color: var(--accent-blue); }
+
+        /* Hero Section */
+        .hero {
+            position: relative; height: 85vh; width: 100%;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 0 6%; overflow: hidden;
+        }
+
+        #bg-video {
+            position: absolute; top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%; z-index: -2;
+            transform: translate(-50%, -50%); object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(75deg, var(--main-bg) 30%, transparent 70%);
+            z-index: -1;
+        }
+
+        .hero-content h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
+        .hero-content p { font-size: 1.1rem; color: #ccc; max-width: 500px; margin-bottom: 25px; }
+
+        .btn { padding: 12px 35px; border-radius: 5px; font-weight: 800; cursor: pointer; border: none; }
+        .btn-blue { background: var(--accent-blue); color: white; }
+
+        /* Content Rows */
+        .section-row { padding: 30px 6% 0; }
+        .row-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 15px; border-right: 4px solid var(--accent-blue); padding-right: 10px; }
+
+        .slider { display: flex; overflow-x: auto; gap: 15px; scrollbar-width: none; padding-bottom: 10px; }
+        .slider::-webkit-scrollbar { display: none; }
+
+        .card {
+            min-width: 160px; height: 240px; background: var(--card-bg);
+            border-radius: 10px; overflow: hidden; position: relative;
+            cursor: pointer; transition: 0.3s; flex-shrink: 0;
+        }
+        .card:hover { transform: scale(1.05); border: 2px solid var(--accent-blue); }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* صفحة التفاصيل (Modal) */
+        .details-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 2000;
+            display: none; justify-content: center; align-items: flex-start;
+            overflow-y: auto; padding-top: 50px;
+        }
+
+        .details-content {
+            width: 90%; max-width: 800px; background: #0f1216;
+            border-radius: 15px; overflow: hidden; position: relative;
+            margin-bottom: 50px;
+        }
+
+        .details-banner { width: 100%; height: 300px; position: relative; }
+        .details-banner img { width: 100%; height: 100%; object-fit: cover; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; color: white; z-index: 10; }
+
+        .details-body { padding: 30px; }
+        .details-body h2 { font-size: 2rem; margin: 0 0 15px; color: var(--accent-blue); }
+        .details-body p { line-height: 1.8; color: #bbb; }
+
+        .episodes-list { margin-top: 30px; }
+        .episode-item { display: flex; gap: 15px; background: #1a1e24; padding: 10px; border-radius: 8px; margin-bottom: 10px; align-items: center; }
+        .episode-img { width: 100px; height: 60px; border-radius: 4px; overflow: hidden; }
+        .episode-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .nav-bottom {
+            position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.98);
+            display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1001;
+        }
+        .nav-item { color: #888; text-decoration: none; text-align: center; font-size: 0.8rem; }
+        .nav-item.active { color: white; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">C<span>REC</span></div>
+        <div style="font-size: 1.5rem; cursor: pointer;">☰</div>
+    </header>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>الخط الأحمر: تحقيقات 2026</h1>
+            <p>شاهد أضخم إنتاجات مركز البحوث الجنائية، حيث نكشف الستار عن أعقد القضايا بأسلوب سينمائي حديث.</p>
+            <button class="btn btn-blue" onclick="openDetails('الخط الأحمر', 'redline.jpg', 'سلسلة وثائقية تكشف خفايا القضايا الجنائية الكبرى في ليبيا، مع تحليل دقيق من الخبراء.')">▶ شاهد الآن</button>
+        </div>
+    </section>
+
+    <div class="section-row">
+        <div class="row-title">أعمال CREC الأصلية</div>
+        <div class="slider">
+            <div class="card" onclick="openDetails('الملف 404', '2.png', 'تحقيق معمق في الجرائم الإلكترونية وكيفية التصدي لها عبر أحدث التقنيات.')">
+                <img src="2.png" alt="">
+            </div>
+            <div class="card" onclick="openDetails('البودكاست', 'podcast.jpg', 'جلسات حوارية مع نخبة من المحققين والخبراء لمناقشة قضايا الرأي العام.')">
+                <img src="podcast.jpg" alt="">
+            </div>
+            <div class="card" onclick="openDetails('الخط الأحمر', 'redline.jpg', 'سلسلة ميدانية من قلب الحدث.')">
+                <img src="redline.jpg" alt="">
+            </div>
+            <div class="card" onclick="openDetails('وثائقي خاص', 'hero.jpg', 'نظرة شاملة على تطور المختبرات الجنائية.')">
+                <img src="hero.jpg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="details-overlay" id="detailsPage">
+        <div class="details-content">
+            <span class="close-btn" onclick="closeDetails()">&times;</span>
+            <div class="details-banner">
+                <img id="detailImg" src="" alt="">
+            </div>
+            <div class="details-body">
+                <h2 id="detailTitle">اسم البرنامج</h2>
+                <p id="detailDesc">هذا النص هو وصف تفصيلي للبرنامج المختار...</p>
+                
+                <div class="episodes-list">
+                    <h3>الحلقات</h3>
+                    <div class="episode-item">
+                        <div class="episode-img"><img src="hero.jpg"></div>
+                        <div><b>الحلقة 1: البداية</b><br><small>45 دقيقة</small></div>
+                    </div>
+                    <div class="episode-item">
+                        <div class="episode-img"><img src="2.png"></div>
+                        <div><b>الحلقة 2: التحقيق</b><br><small>38 دقيقة</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <div class="nav-bottom">
+        <a class="nav-item active"><span>🏠</span> الرئيسية</a>
+        <a class="nav-item"><span>🔍</span> البحث</a>
+        <a class="nav-item" style="color: var(--gold);"><span>🌙</span> رمضان</a>
+        <a class="nav-item"><span>👤</span> حسابي</a>
+    </div>
+
+    <script>
+        function openDetails(title, img, desc) {
+            document.getElementById('detailTitle').innerText = title;
+            document.getElementById('detailImg').src = img;
+            document.getElementById('detailDesc').innerText = desc;
+            document.getElementById('detailsPage').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // منع السكرول في الخلفية
+        }
+
+        function closeDetails() {
+            document.getElementById('detailsPage').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 
 </body>
 </html>
