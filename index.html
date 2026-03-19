@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CREC | التطبيق الرسمي</title>
+<title>CREC | منصة البحوث الجنائية</title>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,8 +11,8 @@
 
 <style>
 :root {
---bg: #030508;
---card: #0d1117;
+--bg: #05070a;
+--card: #111418;
 --blue: #00adef;
 --gold: #c5a059;
 --red: #e50914;
@@ -24,143 +24,154 @@ margin: 0; background: var(--bg); color: white;
 overflow-x: hidden; -webkit-tap-highlight-color: transparent;
 }
 
-/* شاشة الترحيب (Splash Screen) */
+/* شاشة الترحيب (Splash) */
 #splash {
 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
 background: var(--bg); z-index: 5000;
 display: flex; flex-direction: column; justify-content: center; align-items: center;
+transition: 0.8s;
 }
-.splash-img {
-width: 220px; filter: drop-shadow(0 0 15px var(--blue));
-animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; } }
+.splash-logo { width: 200px; filter: drop-shadow(0 0 15px var(--blue)); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
 
 /* الهيدر */
 header {
 display: flex; justify-content: space-between; align-items: center;
 padding: 15px 5%; position: fixed; width: 90%; top: 0;
-background: linear-gradient(to bottom, var(--bg), transparent);
-backdrop-filter: blur(10px); z-index: 1000;
+background: linear-gradient(to bottom, rgba(5,7,10,0.9), transparent);
+backdrop-filter: blur(8px); z-index: 1000;
 }
 .logo-box { display: flex; align-items: center; gap: 10px; }
-.logo-box img { height: 40px; border-radius: 5px; }
+.logo-box img { height: 35px; border-radius: 4px; border: 1px solid var(--blue); }
 
-/* القسم الرئيسي (Hero) */
+/* الغلاف الرئيسي (Hero) */
 .hero {
-position: relative; height: 85vh; width: 100%;
+position: relative; height: 80vh; width: 100%;
 display: flex; flex-direction: column; justify-content: flex-end;
 padding: 0 6% 80px; overflow: hidden;
-}
-#bg-video {
-position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-object-fit: cover; z-index: -2; opacity: 0.7;
+background: url('hero.jpg') no-repeat center center;
+background-size: cover;
 }
 .hero-overlay {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-background: linear-gradient(to top, var(--bg) 15%, transparent 60%);
-z-index: -1;
+background: linear-gradient(to top, var(--bg) 15%, transparent 70%);
+z-index: 1;
 }
 
 .btn-play {
 background: var(--blue); color: white; border: none;
-padding: 16px 40px; border-radius: 12px; font-weight: 800;
-font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; gap: 10px;
+padding: 14px 35px; border-radius: 10px; font-weight: 800;
+font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px;
+z-index: 10; width: fit-content;
 }
 
-/* الصفوف والكروت */
-.section-row { padding: 35px 6% 0; }
-.section-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; border-right: 4px solid var(--blue); padding-right: 12px; }
+/* القوائم المعبأة */
+.section-row { padding: 30px 6% 0; }
+.row-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; border-right: 4px solid var(--blue); padding-right: 12px; }
 
-.slider { display: flex; overflow-x: auto; gap: 18px; scrollbar-width: none; padding-bottom: 10px; }
+.slider { display: flex; overflow-x: auto; gap: 15px; scrollbar-width: none; padding-bottom: 10px; }
 .slider::-webkit-scrollbar { display: none; }
 
 .card {
-min-width: 165px; height: 245px; background: var(--card);
-border-radius: 15px; overflow: hidden; position: relative;
-flex-shrink: 0; transition: 0.4s; border: 1px solid #1a1e23;
+min-width: 155px; height: 230px; background: var(--card);
+border-radius: 12px; overflow: hidden; position: relative;
+flex-shrink: 0; transition: 0.3s; border: 1px solid #222;
 }
-.card:hover { transform: translateY(-8px); border-color: var(--blue); }
 .card img { width: 100%; height: 100%; object-fit: cover; }
-.card-info { position: absolute; bottom: 0; width: 100%; padding: 15px 5px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); text-align: center; font-size: 0.85rem; font-weight: 700; }
+.card-label { position: absolute; bottom: 0; width: 100%; padding: 10px 0; background: rgba(0,0,0,0.7); text-align: center; font-size: 0.8rem; font-weight: 700; }
 
 /* شاشة التفاصيل */
-.detail-page {
+.page-detail {
 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
 background: var(--bg); z-index: 2000; display: none;
-flex-direction: column; overflow-y: auto; animation: slideUp 0.4s cubic-bezier(0.1, 0.7, 1.0, 0.1);
+flex-direction: column; overflow-y: auto; animation: slideUp 0.4s ease;
 }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-.detail-img { width: 100%; height: 350px; position: relative; }
-.detail-img img { width: 100%; height: 100%; object-fit: cover; }
-.close-btn { position: absolute; top: 25px; right: 25px; background: rgba(0,0,0,0.7); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; }
+.detail-banner { width: 100%; height: 320px; position: relative; }
+.detail-banner img { width: 100%; height: 100%; object-fit: cover; }
+.close-x { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.6); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; }
 
-/* التنقل السفلي */
+/* نفيجيشن */
 nav {
-position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.98);
-display: flex; justify-content: space-around; padding: 15px 0 25px;
-border-top: 1px solid #1a1a1a; z-index: 1001; backdrop-filter: blur(15px);
+position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.96);
+display: flex; justify-content: space-around; padding: 12px 0 20px;
+border-top: 1px solid #1a1a1a; z-index: 1001; backdrop-filter: blur(10px);
 }
-.nav-item { color: #666; font-size: 0.75rem; text-align: center; text-decoration: none; }
-.nav-item.active { color: var(--blue); font-weight: 800; }
-
+.nav-link { color: #777; font-size: 0.75rem; text-align: center; text-decoration: none; }
+.nav-link.active { color: var(--blue); font-weight: 800; }
 </style>
 </head>
-<body onload="initApp()">
+<body onload="startApp()">
 
 <div id="splash">
-<img src="logo.png" class="splash-img" alt="CREC Logo">
-<h2 style="letter-spacing: 5px; margin-top: 20px;">C R E C</h2>
-<div style="width: 40px; height: 2px; background: var(--blue); margin-top: 10px;"></div>
+<img src="logo.png" class="splash-logo" alt="Logo">
+<h2 style="margin-top:20px; letter-spacing: 4px;">C R E C</h2>
 </div>
 
 <header>
 <div class="logo-box">
 <img src="logo.png" alt="CREC">
-<div style="font-weight: 800; font-size: 1.2rem;">C<span>REC</span></div>
+<div style="font-weight: 800;">C<span>REC</span></div>
 </div>
-<div style="font-size: 1.4rem;"></div>
+<div style="font-size: 1.3rem;">☰</div>
 </header>
 
-<div id="main-content">
 <section class="hero">
-<video autoplay muted loop playsinline id="bg-video">
-<source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
-</video>
 <div class="hero-overlay"></div>
 <div style="z-index: 10;">
-<p style="color: var(--blue); font-weight: 800;">أعمال CREC الأصلية</p>
-<h1 style="font-size: 2.8rem; margin: 10px 0; line-height: 1.1;">الخط الأحمر:<br>تحقيقات ميدانية</h1>
-<button class="btn-play" onclick="openDetail('الخط الأحمر', 'redline.jpg', 'سلسلة وثائقية مكثفة تكشف خفايا العمل الجنائي الميداني بأسلوب سينمائي.')"> شاهد الآن</button>
+<div style="background:var(--red); display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.7rem; margin-bottom:10px;">إنتاج حصري</div>
+<h1 style="font-size: 2.2rem; margin: 0 0 15px;">معرض النيابة العامة الدولي للكتاب</h1>
+<button class="btn-play" onclick="showPop('معرض الكتاب 2026', 'hero.jpg', 'تغطية شاملة لأحدث إصدارات وفعاليات معرض النيابة العامة الدولي للكتاب بصورة سينمائية.')"> شاهد الآن</button>
 </div>
 </section>
 
 <div class="section-row">
-<div class="section-title">أحدث الإنتاجات</div>
+<div class="row-title">أحدث البرامج</div>
 <div class="slider">
-<div class="card" onclick="openDetail('الملف 404', '2.png', 'تحقيق معمق في الجرائم الإلكترونية.')"><img src="2.png"><div class="card-info">الملف 404</div></div>
-<div class="card" onclick="openDetail('البودكاست', 'podcast.jpg', 'حوارات حصرية مع الخبراء.')"><img src="podcast.jpg"><div class="card-info">البودكاست</div></div>
-<div class="card" onclick="openDetail('المركز: الكواليس', 'hero.jpg', 'نظرة من الداخل.')"><img src="hero.jpg"><div class="card-info">خلف الكواليس</div></div>
-<div class="card" onclick="openDetail('الخط الأحمر', 'redline.jpg', 'مهمات خاصة.')"><img src="redline.jpg"><div class="card-info">الخط الأحمر</div></div>
+<div class="card" onclick="showPop('الملف 404', '2.png', 'وثائقي حصري يكشف كواليس التحقيقات المعقدة.')">
+<img src="2.png"><div class="card-label">الملف 404</div>
+</div>
+<div class="card" onclick="showPop('بودكاست البحوث', 'podcast.jpg', 'حلقات نقاشية مع نخبة من الخبراء في القانون والجريمة.')">
+<img src="podcast.jpg"><div class="card-label">البودكاست</div>
+</div>
+<div class="card" onclick="showPop('الخط الأحمر', 'redline.jpg', 'تغطية ميدانية من قلب الحدث.')">
+<img src="redline.jpg"><div class="card-label">الخط الأحمر</div>
 </div>
 </div>
 </div>
 
-<div class="detail-page" id="detailPage">
-<div class="detail-img">
-<span class="close-btn" onclick="closeDetail()">✕</span>
-<img id="detImg" src="" alt="">
+<div class="section-row">
+<div class="row-title">السلاسل الوثائقية</div>
+<div class="slider">
+<div class="card" onclick="showPop('التحقيق الميداني', 'redline.jpg', 'سلسلة ميدانية تستعرض مهارات التحقيق.')">
+<img src="redline.jpg"><div class="card-label">التحقيق</div>
+</div>
+<div class="card" onclick="showPop('كواليس المركز', 'logo.png', 'جولة داخل مبنى مركز البحوث والتدريب.')">
+<img src="logo.png"><div class="card-label">داخل المركز</div>
+</div>
+<div class="card" onclick="showPop('الأدلة الجنائية', '2.png', 'كيف تعمل المختبرات الجنائية الحديثة.')">
+<img src="2.png"><div class="card-label">الأدلة</div>
+</div>
+</div>
+</div>
+
+<div class="page-detail" id="popPage">
+<div class="detail-banner">
+<span class="close-x" onclick="hidePop()">✕</span>
+<img id="popImg" src="" alt="">
 </div>
 <div style="padding: 25px;">
-<h2 id="detTitle" style="font-size: 2.2rem; color: var(--blue);"></h2>
-<p id="detDesc" style="color: #aaa; line-height: 1.8; margin: 20px 0;"></p>
-<button class="btn-play" style="width: 100%; justify-content: center;"> تشغيل الآن</button>
+<h2 id="popTitle" style="color: var(--blue); font-size: 2rem; margin:0;"></h2>
+<p id="popDesc" style="color: #bbb; line-height: 1.7; margin: 20px 0;"></p>
+<button class="btn-play" style="width: 100%; justify-content: center;"> تشغيل الحلقة</button>
 
-<h3 style="margin-top: 40px;">حلقات ذات صلة</h3>
-<div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px;">
-<div style="min-width: 140px; height: 90px; background: #1a1e23; border-radius: 8px;"><img src="hero.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:8px;"></div>
-<div style="min-width: 140px; height: 90px; background: #1a1e23; border-radius: 8px;"><img src="2.png" style="width:100%; height:100%; object-fit:cover; border-radius:8px;"></div>
+<div style="margin-top: 30px;">
+<h3>الحلقات</h3>
+<div style="display:flex; gap:10px; background:#1a1e24; padding:10px; border-radius:10px; margin-bottom:10px;">
+<img src="hero.jpg" style="width:80px; height:50px; border-radius:5px; object-fit:cover;">
+<div><b>الحلقة 1</b><br><small style="color:var(--blue)">45 دقيقة</small></div>
+</div>
 </div>
 </div>
 </div>
@@ -168,34 +179,29 @@ border-top: 1px solid #1a1a1a; z-index: 1001; backdrop-filter: blur(15px);
 <div style="height: 100px;"></div>
 
 <nav>
-<a class="nav-item active"><br>الرئيسية</a>
-<a class="nav-item"><br>اكتشف</a>
-<a class="nav-item" style="color: var(--gold);"><br>رمضان</a>
-<a class="nav-item"><br>حسابي</a>
+<a class="nav-link active"><br>الرئيسية</a>
+<a class="nav-link"><br>البحث</a>
+<a class="nav-link" style="color: var(--gold);"><br>رمضان</a>
+<a class="nav-link"><br>حسابي</a>
 </nav>
 
 <script>
-function initApp() {
-// إخفاء شاشة الترحيب بعد 3 ثواني
+function startApp() {
 setTimeout(() => {
 document.getElementById('splash').style.opacity = '0';
-setTimeout(() => {
-document.getElementById('splash').style.display = 'none';
-}, 500);
-}, 3000);
+setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 800);
+}, 2500);
 }
 
-function openDetail(title, img, desc) {
-document.getElementById('detTitle').innerText = title;
-document.getElementById('detImg').src = img;
-document.getElementById('detDesc').innerText = desc;
-document.getElementById('detailPage').style.display = 'flex';
-document.body.style.overflow = 'hidden';
+function showPop(t, i, d) {
+document.getElementById('popTitle').innerText = t;
+document.getElementById('popImg').src = i;
+document.getElementById('popDesc').innerText = d;
+document.getElementById('popPage').style.display = 'flex';
 }
 
-function closeDetail() {
-document.getElementById('detailPage').style.display = 'none';
-document.body.style.overflow = 'auto';
+function hidePop() {
+document.getElementById('popPage').style.display = 'none';
 }
 </script>
 </body>
