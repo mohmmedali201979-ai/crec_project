@@ -3,192 +3,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CREC | التحفة الرقمية</title>
+<title>CREC | التطبيق الرسمي</title>
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root {
 --bg: #030508;
 --card: #0d1117;
 --blue: #00adef;
 --gold: #c5a059;
---glass: rgba(255, 255, 255, 0.05);
+--red: #e50914;
 }
 
 body {
 font-family: 'Almarai', sans-serif;
 margin: 0; background: var(--bg); color: white;
-overflow-x: hidden;
+overflow-x: hidden; -webkit-tap-highlight-color: transparent;
 }
 
-/* شاشة الترحيب الفخمة (Splash Screen) */
+/* شاشة الترحيب (Splash Screen) */
 #splash {
 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
 background: var(--bg); z-index: 5000;
 display: flex; flex-direction: column; justify-content: center; align-items: center;
-transition: 0.8s ease-out;
 }
-.splash-logo {
-width: 250px; height: 250px;
-background: url('building-logo.png') no-repeat center; /* ضع اسم صورة المبنى هنا */
-background-size: contain;
-filter: drop-shadow(0 0 20px var(--blue));
+.splash-img {
+width: 220px; filter: drop-shadow(0 0 15px var(--blue));
 animation: pulse 2s infinite;
 }
-@keyframes pulse {
-0% { transform: scale(1); opacity: 0.8; }
-50% { transform: scale(1.05); opacity: 1; }
-100% { transform: scale(1); opacity: 0.8; }
-}
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; } }
 
-/* الهيدر مع اللوجو الجديد */
+/* الهيدر */
 header {
 display: flex; justify-content: space-between; align-items: center;
 padding: 15px 5%; position: fixed; width: 90%; top: 0;
-background: linear-gradient(to bottom, rgba(3,5,8,0.95), transparent);
+background: linear-gradient(to bottom, var(--bg), transparent);
 backdrop-filter: blur(10px); z-index: 1000;
 }
-.app-logo-box { display: flex; align-items: center; gap: 10px; }
-.app-logo-box img { width: 40px; height: 40px; border-radius: 5px; border: 1px solid var(--blue); }
-.app-name { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; }
+.logo-box { display: flex; align-items: center; gap: 10px; }
+.logo-box img { height: 40px; border-radius: 5px; }
 
-/* الغلاف السينمائي (Hero) */
+/* القسم الرئيسي (Hero) */
 .hero {
-position: relative; height: 90vh; width: 100%;
+position: relative; height: 85vh; width: 100%;
 display: flex; flex-direction: column; justify-content: flex-end;
-padding: 0 6% 100px; overflow: hidden;
+padding: 0 6% 80px; overflow: hidden;
 }
-#hero-vid {
+#bg-video {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-object-fit: cover; z-index: -2; opacity: 0.6;
+object-fit: cover; z-index: -2; opacity: 0.7;
 }
-.hero-grad {
+.hero-overlay {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-background: radial-gradient(circle at center, transparent, var(--bg)),
-linear-gradient(to top, var(--bg) 10%, transparent 50%);
+background: linear-gradient(to top, var(--bg) 15%, transparent 60%);
 z-index: -1;
 }
 
-.main-title { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-.main-btn {
-background: var(--blue); color: white; border: none; padding: 16px 45px;
-border-radius: 50px; font-weight: 800; font-size: 1.1rem;
-display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 10px 20px rgba(0,173,239,0.3);
+.btn-play {
+background: var(--blue); color: white; border: none;
+padding: 16px 40px; border-radius: 12px; font-weight: 800;
+font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; gap: 10px;
 }
 
-/* تصميم الكروت (مثل الجزيرة 360) */
-.section-row { padding: 40px 6% 0; }
-.row-head { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
+/* الصفوف والكروت */
+.section-row { padding: 35px 6% 0; }
+.section-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; border-right: 4px solid var(--blue); padding-right: 12px; }
 
-.card-stack { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; padding-bottom: 20px; }
-.card-stack::-webkit-scrollbar { display: none; }
+.slider { display: flex; overflow-x: auto; gap: 18px; scrollbar-width: none; padding-bottom: 10px; }
+.slider::-webkit-scrollbar { display: none; }
 
-.premium-card {
-min-width: 170px; height: 250px; background: var(--card);
-border-radius: 15px; position: relative; overflow: hidden;
-transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1); border: 1px solid #1a1e23;
+.card {
+min-width: 165px; height: 245px; background: var(--card);
+border-radius: 15px; overflow: hidden; position: relative;
+flex-shrink: 0; transition: 0.4s; border: 1px solid #1a1e23;
 }
-.premium-card:hover { transform: scale(1.08) translateY(-10px); border-color: var(--blue); }
-.premium-card img { width: 100%; height: 100%; object-fit: cover; }
-.card-overlay {
-position: absolute; bottom: 0; width: 100%; padding: 20px 10px;
-background: linear-gradient(transparent, rgba(0,0,0,0.9));
-text-align: center; font-size: 0.85rem; font-weight: 700;
-}
+.card:hover { transform: translateY(-8px); border-color: var(--blue); }
+.card img { width: 100%; height: 100%; object-fit: cover; }
+.card-info { position: absolute; bottom: 0; width: 100%; padding: 15px 5px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); text-align: center; font-size: 0.85rem; font-weight: 700; }
 
-/* نافذة العرض (Player Modal) */
-.player-modal {
+/* شاشة التفاصيل */
+.detail-page {
 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-background: #000; z-index: 3000; display: none;
-flex-direction: column; animation: zoomIn 0.3s ease;
+background: var(--bg); z-index: 2000; display: none;
+flex-direction: column; overflow-y: auto; animation: slideUp 0.4s cubic-bezier(0.1, 0.7, 1.0, 0.1);
 }
-@keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-/* نفيجيشن سفلي زجاجي */
+.detail-img { width: 100%; height: 350px; position: relative; }
+.detail-img img { width: 100%; height: 100%; object-fit: cover; }
+.close-btn { position: absolute; top: 25px; right: 25px; background: rgba(0,0,0,0.7); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; }
+
+/* التنقل السفلي */
 nav {
-position: fixed; bottom: 20px; left: 5%; width: 90%;
-background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(20px);
-display: flex; justify-content: space-around; padding: 12px 0;
-border-radius: 20px; border: 1px solid var(--glass); z-index: 1001;
+position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.98);
+display: flex; justify-content: space-around; padding: 15px 0 25px;
+border-top: 1px solid #1a1a1a; z-index: 1001; backdrop-filter: blur(15px);
 }
-.nav-link { color: #666; font-size: 0.75rem; text-decoration: none; text-align: center; }
-.nav-link.active { color: var(--blue); font-weight: 800; }
+.nav-item { color: #666; font-size: 0.75rem; text-align: center; text-decoration: none; }
+.nav-item.active { color: var(--blue); font-weight: 800; }
 
 </style>
 </head>
-<body onload="closeSplash()">
+<body onload="initApp()">
 
 <div id="splash">
-<div class="splash-logo"></div>
-<h2 style="margin-top: 20px; letter-spacing: 5px;">C R E C</h2>
-<p style="color: var(--blue); font-size: 0.8rem;">جاري تحميل التحقيقات...</p>
+<img src="logo.png" class="splash-img" alt="CREC Logo">
+<h2 style="letter-spacing: 5px; margin-top: 20px;">C R E C</h2>
+<div style="width: 40px; height: 2px; background: var(--blue); margin-top: 10px;"></div>
 </div>
 
 <header>
-<div class="app-logo-box">
-<img src="building-logo.png" alt="CREC Logo"> <div class="app-name">C<span>REC</span></div>
+<div class="logo-box">
+<img src="logo.png" alt="CREC">
+<div style="font-weight: 800; font-size: 1.2rem;">C<span>REC</span></div>
 </div>
 <div style="font-size: 1.4rem;"></div>
 </header>
 
+<div id="main-content">
 <section class="hero">
-<video autoplay muted loop playsinline id="hero-vid">
+<video autoplay muted loop playsinline id="bg-video">
 <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
 </video>
-<div class="hero-grad"></div>
+<div class="hero-overlay"></div>
 <div style="z-index: 10;">
-<div style="background: var(--red); display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 900; margin-bottom: 10px;">حصري</div>
-<h1 class="main-title">مستقبل البحث<br>الجنائي 2026</h1>
-<p style="color: #aaa; margin-bottom: 25px; max-width: 400px;">استكشف أحدث التقنيات والتقارير الميدانية بصورة سينمائية احترافية من قلب مركز البحوث.</p>
-<button class="main-btn" onclick="openPlayer()"> شاهد الآن</button>
+<p style="color: var(--blue); font-weight: 800;">أعمال CREC الأصلية</p>
+<h1 style="font-size: 2.8rem; margin: 10px 0; line-height: 1.1;">الخط الأحمر:<br>تحقيقات ميدانية</h1>
+<button class="btn-play" onclick="openDetail('الخط الأحمر', 'redline.jpg', 'سلسلة وثائقية مكثفة تكشف خفايا العمل الجنائي الميداني بأسلوب سينمائي.')"> شاهد الآن</button>
 </div>
 </section>
 
 <div class="section-row">
-<div class="row-head">أحدث السلاسل</div>
-<div class="card-stack">
-<div class="premium-card"><img src="2.png"><div class="card-overlay">الملف 404</div></div>
-<div class="premium-card"><img src="podcast.jpg"><div class="card-overlay">البودكاست</div></div>
-<div class="premium-card"><img src="redline.jpg"><div class="card-overlay">الخط الأحمر</div></div>
-<div class="premium-card"><img src="hero.jpg"><div class="card-overlay">كواليس المركز</div></div>
+<div class="section-title">أحدث الإنتاجات</div>
+<div class="slider">
+<div class="card" onclick="openDetail('الملف 404', '2.png', 'تحقيق معمق في الجرائم الإلكترونية.')"><img src="2.png"><div class="card-info">الملف 404</div></div>
+<div class="card" onclick="openDetail('البودكاست', 'podcast.jpg', 'حوارات حصرية مع الخبراء.')"><img src="podcast.jpg"><div class="card-info">البودكاست</div></div>
+<div class="card" onclick="openDetail('المركز: الكواليس', 'hero.jpg', 'نظرة من الداخل.')"><img src="hero.jpg"><div class="card-info">خلف الكواليس</div></div>
+<div class="card" onclick="openDetail('الخط الأحمر', 'redline.jpg', 'مهمات خاصة.')"><img src="redline.jpg"><div class="card-info">الخط الأحمر</div></div>
+</div>
 </div>
 </div>
 
-<div class="player-modal" id="videoPlayer">
-<div style="padding: 20px; display: flex; justify-content: space-between;">
-<span onclick="closePlayer()" style="font-size: 1.5rem; cursor: pointer;">✕ إغلاق</span>
+<div class="detail-page" id="detailPage">
+<div class="detail-img">
+<span class="close-btn" onclick="closeDetail()">✕</span>
+<img id="detImg" src="" alt="">
 </div>
-<iframe src="https://player.vimeo.com/video/494245641?autoplay=1" style="width: 100%; height: 60vh;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-<div style="padding: 20px;">
-<h2>الآن تشاهد: حلقة الافتتاح</h2>
-<p style="color: #888;">عرض حي لأحدث تجهيزات مركز البحوث والتدريب الجنائي لعام 2026.</p>
+<div style="padding: 25px;">
+<h2 id="detTitle" style="font-size: 2.2rem; color: var(--blue);"></h2>
+<p id="detDesc" style="color: #aaa; line-height: 1.8; margin: 20px 0;"></p>
+<button class="btn-play" style="width: 100%; justify-content: center;"> تشغيل الآن</button>
+
+<h3 style="margin-top: 40px;">حلقات ذات صلة</h3>
+<div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px;">
+<div style="min-width: 140px; height: 90px; background: #1a1e23; border-radius: 8px;"><img src="hero.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:8px;"></div>
+<div style="min-width: 140px; height: 90px; background: #1a1e23; border-radius: 8px;"><img src="2.png" style="width:100%; height:100%; object-fit:cover; border-radius:8px;"></div>
 </div>
 </div>
+</div>
+
+<div style="height: 100px;"></div>
 
 <nav>
-<a class="nav-link active"><br>الرئيسية</a>
-<a class="nav-link"><br>اكتشف</a>
-<a class="nav-link" style="color: var(--gold);"><br>رمضان</a>
-<a class="nav-link"><br>حسابي</a>
+<a class="nav-item active"><br>الرئيسية</a>
+<a class="nav-item"><br>اكتشف</a>
+<a class="nav-item" style="color: var(--gold);"><br>رمضان</a>
+<a class="nav-item"><br>حسابي</a>
 </nav>
 
 <script>
-function closeSplash() {
+function initApp() {
+// إخفاء شاشة الترحيب بعد 3 ثواني
 setTimeout(() => {
 document.getElementById('splash').style.opacity = '0';
 setTimeout(() => {
 document.getElementById('splash').style.display = 'none';
-}, 800);
-}, 2500); // الشاشة تظهر لمدة ثانيتين ونصف لتعطي فخامة
+}, 500);
+}, 3000);
 }
 
-function openPlayer() {
-document.getElementById('videoPlayer').style.display = 'flex';
+function openDetail(title, img, desc) {
+document.getElementById('detTitle').innerText = title;
+document.getElementById('detImg').src = img;
+document.getElementById('detDesc').innerText = desc;
+document.getElementById('detailPage').style.display = 'flex';
+document.body.style.overflow = 'hidden';
 }
 
-function closePlayer() {
-document.getElementById('videoPlayer').style.display = 'none';
+function closeDetail() {
+document.getElementById('detailPage').style.display = 'none';
+document.body.style.overflow = 'auto';
 }
 </script>
-
 </body>
 </html>
