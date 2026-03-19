@@ -1,417 +1,194 @@
-[12:47 ص، 2026/3/20] Mohmmed Abu hatem: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREC | منصة المشاهدة الاحترافية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --main-bg: #05070a;
-            --card-bg: #111418;
-            --accent-blue: #00adef;
-            --accent-red: #e50914;
-            --gold: #c5a059;
-            --gray-text: #a0a0a0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CREC | التحفة الرقمية</title>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #030508;
+--card: #0d1117;
+--blue: #00adef;
+--gold: #c5a059;
+--glass: rgba(255, 255, 255, 0.05);
+}
 
-        body {
-            font-family: 'Almarai', sans-serif;
-            margin: 0; background-color: var(--main-bg); color: white;
-            overflow-x: hidden; scroll-behavior: smooth;
-        }
+body {
+font-family: 'Almarai', sans-serif;
+margin: 0; background: var(--bg); color: white;
+overflow-x: hidden;
+}
 
-        /* القائمة العلوية الشفافة */
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 6%; position: fixed; width: 88%; top: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-            z-index: 2000; transition: 0.4s;
-        }
+/* شاشة الترحيب الفخمة (Splash Screen) */
+#splash {
+position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: var(--bg); z-index: 5000;
+display: flex; flex-direction: column; justify-content: center; align-items: center;
+transition: 0.8s ease-out;
+}
+.splash-logo {
+width: 250px; height: 250px;
+background: url('building-logo.png') no-repeat center; /* ضع اسم صورة المبنى هنا */
+background-size: contain;
+filter: drop-shadow(0 0 20px var(--blue));
+animation: pulse 2s infinite;
+}
+@keyframes pulse {
+0% { transform: scale(1); opacity: 0.8; }
+50% { transform: scale(1.05); opacity: 1; }
+100% { transform: scale(1); opacity: 0.8; }
+}
 
-        .logo { font-weight: 900; font-size: 1.8rem; color: white; text-decoration: none; }
-        .logo span { color: var(--accent-blue); }
+/* الهيدر مع اللوجو الجديد */
+header {
+display: flex; justify-content: space-between; align-items: center;
+padding: 15px 5%; position: fixed; width: 90%; top: 0;
+background: linear-gradient(to bottom, rgba(3,5,8,0.95), transparent);
+backdrop-filter: blur(10px); z-index: 1000;
+}
+.app-logo-box { display: flex; align-items: center; gap: 10px; }
+.app-logo-box img { width: 40px; height: 40px; border-radius: 5px; border: 1px solid var(--blue); }
+.app-name { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; }
 
-        .header-tools { display: flex; align-items: center; gap: 20px; }
-        .live-tag {
-            background: var(--accent-red); color: white; padding: 4px 12px;
-            border-radius: 4px; font-weight: 800; font-size: 0.75rem;
-            display: flex; align-items: center; gap: 6px;
-        }
+/* الغلاف السينمائي (Hero) */
+.hero {
+position: relative; height: 90vh; width: 100%;
+display: flex; flex-direction: column; justify-content: flex-end;
+padding: 0 6% 100px; overflow: hidden;
+}
+#hero-vid {
+position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+object-fit: cover; z-index: -2; opacity: 0.6;
+}
+.hero-grad {
+position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+background: radial-gradient(circle at center, transparent, var(--bg)),
+linear-gradient(to top, var(--bg) 10%, transparent 50%);
+z-index: -1;
+}
 
-        /* قسم الغلاف العملاق (Hero) */
-        .hero {
-            position: relative; height: 95vh; width: 100%;
-            display: flex; flex-direction: column; justify-content: center;
-            padding: 0 6%; overflow: hidden;
-        }
+.main-title { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+.main-btn {
+background: var(--blue); color: white; border: none; padding: 16px 45px;
+border-radius: 50px; font-weight: 800; font-size: 1.1rem;
+display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 10px 20px rgba(0,173,239,0.3);
+}
 
-        #bg-video {
-            position: absolute; top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%; z-index: -2;
-            transform: translate(-50%, -50%); object-fit: cover;
-        }
+/* تصميم الكروت (مثل الجزيرة 360) */
+.section-row { padding: 40px 6% 0; }
+.row-head { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
 
-        .hero-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(75deg, var(--main-bg) 25%, transparent 60%),
-                        linear-gradient(to top, var(--main-bg) 5%, transparent 40%);
-            z-index: -1;
-        }
+.card-stack { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; padding-bottom: 20px; }
+.card-stack::-webkit-scrollbar { display: none; }
 
-        .hero-content { max-width: 650px; z-index: 10; }
-        .hero-content h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; font-weight: 800; }
-        .hero-content p { font-size: 1.2rem; color: #ccc; margin-bottom: 30px; line-height: 1.6; }
+.premium-card {
+min-width: 170px; height: 250px; background: var(--card);
+border-radius: 15px; position: relative; overflow: hidden;
+transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1); border: 1px solid #1a1e23;
+}
+.premium-card:hover { transform: scale(1.08) translateY(-10px); border-color: var(--blue); }
+.premium-card img { width: 100%; height: 100%; object-fit: cover; }
+.card-overlay {
+position: absolute; bottom: 0; width: 100%; padding: 20px 10px;
+background: linear-gradient(transparent, rgba(0,0,0,0.9));
+text-align: center; font-size: 0.85rem; font-weight: 700;
+}
 
-        .btn-group { display: flex; gap: 15px; }
-        .btn {
-            padding: 14px 35px; border-radius: 6px; font-weight: 800;
-            font-size: 1.1rem; cursor: pointer; border: none; transition: 0.3s;
-        }
-        .btn-blue { background: var(--accent-blue); color: white; }
-        .btn-outline { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
-        .btn:hover { transform: scale(1.05); }
+/* نافذة العرض (Player Modal) */
+.player-modal {
+position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: #000; z-index: 3000; display: none;
+flex-direction: column; animation: zoomIn 0.3s ease;
+}
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        /* تنظيم المحتوى (الصفوف) */
-        .content-main { padding: 40px 0 120px; position: relative; margin-top: -80px; }
+/* نفيجيشن سفلي زجاجي */
+nav {
+position: fixed; bottom: 20px; left: 5%; width: 90%;
+background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(20px);
+display: flex; justify-content: space-around; padding: 12px 0;
+border-radius: 20px; border: 1px solid var(--glass); z-index: 1001;
+}
+.nav-link { color: #666; font-size: 0.75rem; text-decoration: none; text-align: center; }
+.nav-link.active { color: var(--blue); font-weight: 800; }
 
-        .section-row { margin-bottom: 45px; padding: 0 6%; }
-        .row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-        .row-title { font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-        .row-title::before { content: ""; width: 5px; height: 25px; background: var(--accent-blue); border-radius: 2px; }
-
-        .slider {
-            display: flex; overflow-x: auto; gap: 18px;
-            scrollbar-width: none; padding: 10px 0;
-        }
-        .slider::-webkit-scrollbar { display: none; }
-
-        /* كروت متنوعة (مثل تصميمك المرفق) */
-        .card {
-            min-width: 180px; height: 270px; background: var(--card-bg);
-            border-radius: 12px; overflow: hidden; position: relative;
-            transition: 0.4s; border: 1px solid #222; flex-shrink: 0;
-        }
-        .card:hover { transform: translateY(-10px); border-color: var(--accent-blue); box-shadow: 0 10px 30px rgba(0,173,239,0.3); }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
-
-        .card-wide { min-width: 320px; height: 180px; }
-
-        .card-info {
-            position: absolute; bottom: 0; width: 100%; padding: 15px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-        }
-        .card-info h4 { margin: 0; font-size: 0.9rem; font-weight: 700; }
-
-        .badge {
-            position: absolute; top: 12px; left: 12px;
-            background: var(--accent-blue); color: white;
-            font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 800;
-        }
-
-        /* التنقل السفلي */
-        .nav-bottom {
-            position: fixed; bottom: 0; width: 100%;
-            background: rgba(5,7,10,0.95); backdrop-filter: blur(15px);
-            display: flex; justify-content: space-around; padding: 15px 0;
-            border-top: 1px solid #1a1a1a; z-index: 3000;
-        }
-        .nav-item { color: #777; text-decoration: none; text-align: center; font-size: 0.8rem; }
-        .nav-item.active { color: white; }
-        .nav-item i { font-size: 1.5rem; display: block; margin-bottom: 5px; }
-
-    </style>
+</style>
 </head>
-<body>
+<body onload="closeSplash()">
 
-    <header id="main-header">
-        <div class="logo">C<span>REC</span></div>
-        <div class="header-tools">
-            <div class="live-tag"><span>●</span> مباشر</div>
-            <div style="font-size: 1.5rem; cursor: pointer;">🔍</div>
-            <div style="font-size: 1.5rem; cursor: pointer;">☰</div>
-        </div>
-    </header>
+<div id="splash">
+<div class="splash-logo"></div>
+<h2 style="margin-top: 20px; letter-spacing: 5px;">C R E C</h2>
+<p style="color: var(--blue); font-size: 0.8rem;">جاري تحميل التحقيقات...</p>
+</div>
 
-    <section class="hero">
-        <video autoplay muted loop playsinline id="bg-video" poster="hero.jpg">
-            <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        
-        <div class="hero-content">
-            <p style="color: var(--accent-blue); font-weight: 800; margin-bottom: 10px;">انتاج حصري لعام 2026</p>
-            <h1>تحقيقات الخط الأحمر:<br>أسرار لم تنشر من قبل</h1>
-            <p>سلسلة وثائقية مكثفة تستعرض أحدث ملفات الجريمة السيبرانية بأسلوب سينمائي مبهر يعتمد على أحدث تقنيات الجرافيك.</p>
-            <div class="btn-group">
-                <button class="btn btn-blue">▶ شاهد الآن</button>
-                <button class="btn btn-outline">＋ قائمتي</button>
-            </div>
-        </div>
-    </section>
+<header>
+<div class="app-logo-box">
+<img src="building-logo.png" alt="CREC Logo"> <div class="app-name">C<span>REC</span></div>
+</div>
+<div style="font-size: 1.4rem;"></div>
+</header>
 
-    <div class="content-main">
-        
-        <div class="section-row">
-            <div class="row-header"><div class="row-title">أعمال CREC الأصلية</div></div>
-            <div class="slider">
-                <div class="card">
-                    <div class="badge">جديد</div>
-                    <img src="redline.jpg" alt="">
-                    <div class="card-info"><h4>الخط الأحمر: الجزء 2</h4></div>
-                </div>
-                <div class="card">
-                    <img src="podcast.jpg" alt="">
-                    <div class="card-info"><h4>بودكاست: خفايا الجريمة</h4></div>
-                </div>
-                <div class="card">
-                    <div class="badge">حصري</div>
-                    <img src="2.png" alt="">
-                    <div class="card-info"><h4>وثائقي: الملف 404</h4></div>
-                </div>
-                <div class="card">
-                    <img src="hero.jpg" alt="">
-                    <div class="card-info"><h4>خلف الكواليس</h4></div>
-                </div>
-            </div>
-        </div>
+<section class="hero">
+<video autoplay muted loop playsinline id="hero-vid">
+<source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
+</video>
+<div class="hero-grad"></div>
+<div style="z-index: 10;">
+<div style="background: var(--red); display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 900; margin-bottom: 10px;">حصري</div>
+<h1 class="main-title">مستقبل البحث<br>الجنائي 2026</h1>
+<p style="color: #aaa; margin-bottom: 25px; max-width: 400px;">استكشف أحدث التقنيات والتقارير الميدانية بصورة سينمائية احترافية من قلب مركز البحوث.</p>
+<button class="main-btn" onclick="openPlayer()"> شاهد الآن</button>
+</div>
+</section>
 
-        <div class="section-row">
-            <div class="row-header"><div class="row-title">أفلام وثائقية مختارة</div></div>
-            <div class="slider">
-                <div class="card card-wide">
-                    <div class="badge">الأكثر مشاهدة</div>
-                    <img src="hero.jpg" alt="">
-                    <div class="card-info"><h4>أمن البيانات: معركة الوجود</h4></div>
-                </div>
-                <div class="card card-wide">
-                    <img src="2.png" alt="">
-                    <div class="card-info"><h4>الذكاء الاصطناعي في التحقيق</h4></div>
-                </div>
-            </div>
-        </div>
+<div class="section-row">
+<div class="row-head">أحدث السلاسل</div>
+<div class="card-stack">
+<div class="premium-card"><img src="2.png"><div class="card-overlay">الملف 404</div></div>
+<div class="premium-card"><img src="podcast.jpg"><div class="card-overlay">البودكاست</div></div>
+<div class="premium-card"><img src="redline.jpg"><div class="card-overlay">الخط الأحمر</div></div>
+<div class="premium-card"><img src="hero.jpg"><div class="card-overlay">كواليس المركز</div></div>
+</div>
+</div>
 
-        <div class="section-row">
-            <div class="row-header"><div class="row-title">برامج رمضان 2026</div></div>
-            <div class="slider">
-                <div class="card">
-                    <img src="podcast.jpg" alt="">
-                    <div class="card-info"><h4>مجالس العلم والتحقيق</h4></div>
-                </div>
-                <div class="card">
-                    <img src="redline.jpg" alt="">
-                    <div class="card-info"><h4>قصص من التاريخ الجنائي</h4></div>
-                </div>
-                <div class="card">
-                    <img src="hero.jpg" alt="">
-                    <div class="card-info"><h4>الميدان الرمضاني</h4></div>
-                </div>
-            </div>
-        </div>
+<div class="player-modal" id="videoPlayer">
+<div style="padding: 20px; display: flex; justify-content: space-between;">
+<span onclick="closePlayer()" style="font-size: 1.5rem; cursor: pointer;">✕ إغلاق</span>
+</div>
+<iframe src="https://player.vimeo.com/video/494245641?autoplay=1" style="width: 100%; height: 60vh;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<div style="padding: 20px;">
+<h2>الآن تشاهد: حلقة الافتتاح</h2>
+<p style="color: #888;">عرض حي لأحدث تجهيزات مركز البحوث والتدريب الجنائي لعام 2026.</p>
+</div>
+</div>
 
-    </div>
+<nav>
+<a class="nav-link active"><br>الرئيسية</a>
+<a class="nav-link"><br>اكتشف</a>
+<a class="nav-link" style="color: var(--gold);"><br>رمضان</a>
+<a class="nav-link"><br>حسابي</a>
+</nav>
 
-    <div class="nav-bottom">
-        <a class="nav-item active"><span>🏠</span>الرئيسية</a>
-        <a class="nav-item"><span>🔍</span>البحث</a>
-        <a class="nav-item" style="color: var(--gold);"><span>🌙</span>رمضان</a>
-        <a class="nav-item"><span>👤</span>حسابي</a>
-    </div>
+<script>
+function closeSplash() {
+setTimeout(() => {
+document.getElementById('splash').style.opacity = '0';
+setTimeout(() => {
+document.getElementById('splash').style.display = 'none';
+}, 800);
+}, 2500); // الشاشة تظهر لمدة ثانيتين ونصف لتعطي فخامة
+}
 
-</body>
-</html>
-[12:49 ص، 2026/3/20] Mohmmed Abu hatem: <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREC | منصة المشاهدة الاحترافية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --main-bg: #05070a;
-            --card-bg: #111418;
-            --accent-blue: #00adef;
-            --accent-red: #e50914;
-            --gold: #c5a059;
-        }
+function openPlayer() {
+document.getElementById('videoPlayer').style.display = 'flex';
+}
 
-        body {
-            font-family: 'Almarai', sans-serif;
-            margin: 0; background-color: var(--main-bg); color: white;
-            overflow-x: hidden;
-        }
-
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 6%; position: fixed; width: 88%; top: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-            z-index: 1000;
-        }
-
-        .logo { font-weight: 900; font-size: 1.8rem; }
-        .logo span { color: var(--accent-blue); }
-
-        /* Hero Section */
-        .hero {
-            position: relative; height: 85vh; width: 100%;
-            display: flex; flex-direction: column; justify-content: center;
-            padding: 0 6%; overflow: hidden;
-        }
-
-        #bg-video {
-            position: absolute; top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%; z-index: -2;
-            transform: translate(-50%, -50%); object-fit: cover;
-        }
-
-        .hero-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(75deg, var(--main-bg) 30%, transparent 70%);
-            z-index: -1;
-        }
-
-        .hero-content h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
-        .hero-content p { font-size: 1.1rem; color: #ccc; max-width: 500px; margin-bottom: 25px; }
-
-        .btn { padding: 12px 35px; border-radius: 5px; font-weight: 800; cursor: pointer; border: none; }
-        .btn-blue { background: var(--accent-blue); color: white; }
-
-        /* Content Rows */
-        .section-row { padding: 30px 6% 0; }
-        .row-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 15px; border-right: 4px solid var(--accent-blue); padding-right: 10px; }
-
-        .slider { display: flex; overflow-x: auto; gap: 15px; scrollbar-width: none; padding-bottom: 10px; }
-        .slider::-webkit-scrollbar { display: none; }
-
-        .card {
-            min-width: 160px; height: 240px; background: var(--card-bg);
-            border-radius: 10px; overflow: hidden; position: relative;
-            cursor: pointer; transition: 0.3s; flex-shrink: 0;
-        }
-        .card:hover { transform: scale(1.05); border: 2px solid var(--accent-blue); }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* صفحة التفاصيل (Modal) */
-        .details-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000;
-            display: none; justify-content: center; align-items: flex-start;
-            overflow-y: auto; padding-top: 50px;
-        }
-
-        .details-content {
-            width: 90%; max-width: 800px; background: #0f1216;
-            border-radius: 15px; overflow: hidden; position: relative;
-            margin-bottom: 50px;
-        }
-
-        .details-banner { width: 100%; height: 300px; position: relative; }
-        .details-banner img { width: 100%; height: 100%; object-fit: cover; }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; color: white; z-index: 10; }
-
-        .details-body { padding: 30px; }
-        .details-body h2 { font-size: 2rem; margin: 0 0 15px; color: var(--accent-blue); }
-        .details-body p { line-height: 1.8; color: #bbb; }
-
-        .episodes-list { margin-top: 30px; }
-        .episode-item { display: flex; gap: 15px; background: #1a1e24; padding: 10px; border-radius: 8px; margin-bottom: 10px; align-items: center; }
-        .episode-img { width: 100px; height: 60px; border-radius: 4px; overflow: hidden; }
-        .episode-img img { width: 100%; height: 100%; object-fit: cover; }
-
-        .nav-bottom {
-            position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.98);
-            display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1001;
-        }
-        .nav-item { color: #888; text-decoration: none; text-align: center; font-size: 0.8rem; }
-        .nav-item.active { color: white; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">C<span>REC</span></div>
-        <div style="font-size: 1.5rem; cursor: pointer;">☰</div>
-    </header>
-
-    <section class="hero">
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>الخط الأحمر: تحقيقات 2026</h1>
-            <p>شاهد أضخم إنتاجات مركز البحوث الجنائية، حيث نكشف الستار عن أعقد القضايا بأسلوب سينمائي حديث.</p>
-            <button class="btn btn-blue" onclick="openDetails('الخط الأحمر', 'redline.jpg', 'سلسلة وثائقية تكشف خفايا القضايا الجنائية الكبرى في ليبيا، مع تحليل دقيق من الخبراء.')">▶ شاهد الآن</button>
-        </div>
-    </section>
-
-    <div class="section-row">
-        <div class="row-title">أعمال CREC الأصلية</div>
-        <div class="slider">
-            <div class="card" onclick="openDetails('الملف 404', '2.png', 'تحقيق معمق في الجرائم الإلكترونية وكيفية التصدي لها عبر أحدث التقنيات.')">
-                <img src="2.png" alt="">
-            </div>
-            <div class="card" onclick="openDetails('البودكاست', 'podcast.jpg', 'جلسات حوارية مع نخبة من المحققين والخبراء لمناقشة قضايا الرأي العام.')">
-                <img src="podcast.jpg" alt="">
-            </div>
-            <div class="card" onclick="openDetails('الخط الأحمر', 'redline.jpg', 'سلسلة ميدانية من قلب الحدث.')">
-                <img src="redline.jpg" alt="">
-            </div>
-            <div class="card" onclick="openDetails('وثائقي خاص', 'hero.jpg', 'نظرة شاملة على تطور المختبرات الجنائية.')">
-                <img src="hero.jpg" alt="">
-            </div>
-        </div>
-    </div>
-
-    <div class="details-overlay" id="detailsPage">
-        <div class="details-content">
-            <span class="close-btn" onclick="closeDetails()">&times;</span>
-            <div class="details-banner">
-                <img id="detailImg" src="" alt="">
-            </div>
-            <div class="details-body">
-                <h2 id="detailTitle">اسم البرنامج</h2>
-                <p id="detailDesc">هذا النص هو وصف تفصيلي للبرنامج المختار...</p>
-                
-                <div class="episodes-list">
-                    <h3>الحلقات</h3>
-                    <div class="episode-item">
-                        <div class="episode-img"><img src="hero.jpg"></div>
-                        <div><b>الحلقة 1: البداية</b><br><small>45 دقيقة</small></div>
-                    </div>
-                    <div class="episode-item">
-                        <div class="episode-img"><img src="2.png"></div>
-                        <div><b>الحلقة 2: التحقيق</b><br><small>38 دقيقة</small></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div style="height: 100px;"></div>
-
-    <div class="nav-bottom">
-        <a class="nav-item active"><span>🏠</span> الرئيسية</a>
-        <a class="nav-item"><span>🔍</span> البحث</a>
-        <a class="nav-item" style="color: var(--gold);"><span>🌙</span> رمضان</a>
-        <a class="nav-item"><span>👤</span> حسابي</a>
-    </div>
-
-    <script>
-        function openDetails(title, img, desc) {
-            document.getElementById('detailTitle').innerText = title;
-            document.getElementById('detailImg').src = img;
-            document.getElementById('detailDesc').innerText = desc;
-            document.getElementById('detailsPage').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // منع السكرول في الخلفية
-        }
-
-        function closeDetails() {
-            document.getElementById('detailsPage').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    </script>
+function closePlayer() {
+document.getElementById('videoPlayer').style.display = 'none';
+}
+</script>
 
 </body>
 </html>
