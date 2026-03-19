@@ -3,228 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREC | المنصة الرسمية</title>
+    <title>CREC | منصة المشاهدة</title>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-bg: #000000;
-            --card-bg: #121212;
+            --main-bg: #0b0e11;
+            --card-bg: #1b1f23;
             --accent-blue: #00adef;
             --accent-red: #ff0000;
             --exclusive-gold: #c5a059;
+            --text-gray: #b1b1b1;
         }
 
         body {
             font-family: 'Almarai', sans-serif;
-            margin: 0;
-            background-color: var(--main-bg);
-            color: white;
+            margin: 0; background-color: var(--main-bg); color: white;
             overflow-x: hidden;
         }
 
+        /* القائمة الجانبية (مثل الجزيرة 360) */
+        .sidebar {
+            position: fixed; top: 0; right: -280px; width: 280px; height: 100%;
+            background-color: #050505; z-index: 2000; transition: 0.4s;
+            padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        }
+        .sidebar.active { right: 0; }
+        .sidebar-item { padding: 15px 10px; border-bottom: 1px solid #1a1a1a; cursor: pointer; color: white; display: block; text-decoration: none; }
+        .sidebar-item:hover { background-color: #111; color: var(--accent-blue); }
+
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            position: fixed;
-            width: 90%;
-            top: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
-            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; position: fixed; width: 90%; top: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); z-index: 1000;
         }
 
-        .logo { font-weight: 800; font-size: 1.6rem; color: white; }
+        .live-btn { background: var(--accent-red); padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+        .logo { font-weight: 800; font-size: 1.8rem; letter-spacing: 1px; }
         .logo span { color: var(--accent-blue); }
 
-        .live-badge {
-            background-color: var(--accent-red);
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        /* Hero Section */
+        /* Hero Carousel (شريط التمرير العلوي) */
         .hero {
-            position: relative;
-            height: 75vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 0 5% 40px;
+            position: relative; height: 80vh; width: 100%; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 0 5% 60px;
         }
+        #bg-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; z-index: -2; transform: translate(-50%, -50%); object-fit: cover; }
+        .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--main-bg) 10%, transparent 60%); z-index: -1; }
 
-        #bg-video {
-            position: absolute;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            z-index: -2;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
+        .hero h1 { font-size: 2.2rem; margin: 0; font-weight: 800; }
+        .hero p { color: var(--text-gray); max-width: 450px; margin: 10px 0; font-size: 0.95rem; }
+        .btn-main { background: #00adef; color: white; border: none; padding: 12px 40px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        .video-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, var(--main-bg) 15%, transparent 70%);
-            z-index: -1;
-        }
-
-        .hero h1 { font-size: 2.5rem; margin: 0; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.7); }
-        .btn-watch {
-            background-color: var(--accent-blue);
-            color: white; border: none;
-            padding: 12px 35px; border-radius: 5px;
-            font-weight: 800; font-size: 1.1rem;
-            cursor: pointer; margin-top: 15px; width: fit-content;
-        }
-
-        /* Rows and Sliders */
+        /* الأقسام والمحتوى */
+        .content-container { padding-bottom: 100px; }
         .section-row { padding: 25px 5% 0; }
-        .section-title { font-size: 1.2rem; margin-bottom: 15px; font-weight: 700; border-right: 4px solid var(--accent-blue); padding-right: 12px; color: #eee; }
-
-        .slider { display: flex; overflow-x: auto; gap: 15px; scrollbar-width: none; padding-bottom: 10px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .section-title { font-size: 1.2rem; font-weight: 800; border-right: 4px solid var(--accent-blue); padding-right: 10px; }
+        
+        .slider { display: flex; overflow-x: auto; gap: 15px; scrollbar-width: none; padding: 10px 0; }
         .slider::-webkit-scrollbar { display: none; }
 
-        .poster-card {
-            min-width: 140px;
-            height: 210px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid #222;
-            flex-shrink: 0;
-        }
-
-        .poster-card img { width: 100%; height: 100%; object-fit: cover; }
+        /* كرت برامج (طولي) */
+        .card-v { min-width: 160px; height: 240px; border-radius: 10px; overflow: hidden; position: relative; background: var(--card-bg); flex-shrink: 0; }
+        .card-v img { width: 100%; height: 100%; object-fit: cover; }
         
-        .card-label { position: absolute; bottom: 8px; right: 8px; font-weight: bold; font-size: 0.85rem; text-shadow: 1px 1px 3px black; }
+        /* كرت أفلام/وثائقيات (عرضي) */
+        .card-h { min-width: 280px; height: 160px; border-radius: 10px; overflow: hidden; position: relative; background: var(--card-bg); flex-shrink: 0; }
+        .card-h img { width: 100%; height: 100%; object-fit: cover; }
 
-        .exclusive-badge {
-            position: absolute;
-            top: 8px; left: 8px;
-            background: var(--exclusive-gold);
-            color: black; font-size: 0.65rem;
-            padding: 2px 6px; font-weight: 800; border-radius: 3px;
-        }
+        .card-info { position: absolute; bottom: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); font-size: 0.85rem; font-weight: bold; }
+        .badge-new { background: var(--accent-blue); color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 2px; position: absolute; top: 10px; left: 10px; }
 
-        /* Bottom Nav */
+        /* التنقل السفلي */
         .bottom-nav {
-            position: fixed;
-            bottom: 0; width: 100%;
-            background-color: rgba(0,0,0,0.96);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #333;
-            z-index: 1001;
+            position: fixed; bottom: 0; width: 100%; background: rgba(11,14,17,0.98);
+            display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1000;
         }
-
-        .nav-item { text-align: center; color: #888; font-size: 0.75rem; cursor: pointer; }
-        .nav-item.active { color: var(--accent-blue); }
-        .nav-item span { font-size: 1.3rem; display: block; margin-bottom: 2px; }
+        .nav-link { color: #888; text-decoration: none; text-align: center; font-size: 0.75rem; }
+        .nav-link.active { color: white; }
+        .nav-link i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
 
     </style>
 </head>
 <body>
 
+    <div class="sidebar" id="sidebar">
+        <h3 style="color: var(--accent-blue);">الإعدادات</h3>
+        <a class="sidebar-item">المفضلة</a>
+        <a class="sidebar-item">سجل التصفح</a>
+        <a class="sidebar-item">سياسة الخصوصية</a>
+        <a class="sidebar-item">مركز خدمة العملاء</a>
+        <a class="sidebar-item" style="color: var(--accent-red);">تسجيل الخروج</a>
+    </div>
+
     <header>
-        <div class="live-badge">مباشر</div>
+        <div class="live-btn"><span>●</span> البث المباشر</div>
         <div class="logo">C<span>REC</span></div>
-        <div style="font-size: 1.5rem;">☰</div>
+        <div style="font-size: 1.6rem; cursor: pointer;" onclick="toggleSidebar()">☰</div>
     </header>
 
-    <section class="hero">
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
-        <p style="color: var(--accent-blue); font-weight: 800; margin-bottom: 5px;">أحدث الإنتاجات</p>
-        <h1>مركز البحوث والتدريب الجنائي</h1>
-        <button class="btn-watch">▶ شاهد الآن</button>
-    </section>
+    <div class="content-container">
+        
+        <section class="hero">
+            <video autoplay muted loop playsinline id="bg-video">
+                <source src="https://player.vimeo.com/external/494245641.sd.mp4?s=19509865e28a6f3b1dc995632f170942502808c4&profile_id=165" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+            <div class="badge-new" style="font-size: 0.8rem; top: auto; bottom: 180px;">جديد</div>
+            <h1>الملف 404: تحقيقات رقمية</h1>
+            <p>سلسلة وثائقية تكشف خفايا الجرائم السيبرانية وأحدث أنظمة التشفير العالمية لعام 2026.</p>
+            <button class="btn-main">شاهد الآن</button>
+        </section>
 
-    <div class="section-row">
-        <div class="section-title">أعمال CREC الأصلية</div>
-        <div class="slider">
-            <div class="poster-card">
-                <div class="exclusive-badge">حصري</div>
-                <img src="redline.jpg" alt="1">
-                <div class="card-label">الخط الأحمر</div>
+        <div class="section-row">
+            <div class="section-header">
+                <div class="section-title">أعمال CREC الأصلية</div>
             </div>
-            <div class="poster-card">
-                <img src="podcast.jpg" alt="2">
-                <div class="card-label">البودكاست</div>
-            </div>
-            <div class="poster-card">
-                <div class="exclusive-badge">حصري</div>
-                <img src="2.png" alt="3">
-                <div class="card-label">تحقيقات</div>
-            </div>
-            <div class="poster-card">
-                <img src="hero.jpg" alt="4">
-                <div class="card-label">وثائقي خاص</div>
+            <div class="slider">
+                <div class="card-v">
+                    <div class="badge-new">حلقة جديدة</div>
+                    <img src="redline.jpg" alt="">
+                    <div class="card-info">الخط الأحمر</div>
+                </div>
+                <div class="card-v">
+                    <img src="podcast.jpg" alt="">
+                    <div class="card-info">البودكاست</div>
+                </div>
+                <div class="card-v">
+                    <div class="badge-new">جديد</div>
+                    <img src="2.png" alt="">
+                    <div class="card-info">الملف 404</div>
+                </div>
+                <div class="card-v">
+                    <img src="hero.jpg" alt="">
+                    <div class="card-info">وثائقي خاص</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="section-row">
-        <div class="section-title">الأكثر مشاهدة</div>
-        <div class="slider">
-            <div class="poster-card">
-                <img src="2.png" alt="5">
-                <div class="card-label">ملف 404</div>
-            </div>
-            <div class="poster-card">
-                <div class="exclusive-badge">حصري</div>
-                <img src="redline.jpg" alt="6">
-                <div class="card-label">مهمة سرية</div>
-            </div>
-            <div class="poster-card">
-                <img src="podcast.jpg" alt="7">
-                <div class="card-label">خلف الكواليس</div>
-            </div>
-            <div class="poster-card">
-                <img src="hero.jpg" alt="8">
-                <div class="card-label">التدريب الفني</div>
+        <div class="section-row">
+            <div class="section-title">برامج حوارية</div>
+            <div class="slider">
+                <div class="card-h">
+                    <img src="podcast.jpg" alt="">
+                    <div class="card-info">المقابلة: خفايا التحقيق</div>
+                </div>
+                <div class="card-h">
+                    <img src="hero.jpg" alt="">
+                    <div class="card-info">طاولة النقاش المستديرة</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="section-row">
-        <div class="section-title">تقارير ميدانية</div>
-        <div class="slider">
-            <div class="poster-card">
-                <img src="hero.jpg" alt="9">
-                <div class="card-label">الميدان</div>
-            </div>
-            <div class="poster-card">
-                <div class="exclusive-badge">حصري</div>
-                <img src="2.png" alt="10">
-                <div class="card-label">الأدلة الجنائية</div>
-            </div>
-            <div class="poster-card">
-                <img src="redline.jpg" alt="11">
-                <div class="card-label">التحقيق الرقمي</div>
+        <div class="section-row">
+            <div class="section-title">السلاسل الوثائقية</div>
+            <div class="slider">
+                <div class="card-v">
+                    <img src="2.png" alt="">
+                    <div class="card-info">الأدلة الجنائية</div>
+                </div>
+                <div class="card-v">
+                    <img src="redline.jpg" alt="">
+                    <div class="card-info">سلاسل سياسية</div>
+                </div>
+                <div class="card-v">
+                    <img src="hero.jpg" alt="">
+                    <div class="card-info">الميدان</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div style="height: 100px;"></div>
+    </div>
 
     <div class="bottom-nav">
-        <div class="nav-item active"><span>🏠</span>الرئيسية</div>
-        <div class="nav-item"><span>🔍</span>البحث</div>
-        <div class="nav-item" style="color: var(--exclusive-gold);"><span>💎</span>حصري</div>
-        <div class="nav-item"><span>👤</span>حسابي</div>
+        <a class="nav-link active"><span>🏠</span> الرئيسية</a>
+        <a class="nav-link"><span>🔍</span> البحث</a>
+        <a class="nav-link"><span>🌙</span> رمضان</a>
+        <a class="nav-link"><span>👤</span> حسابي</a>
     </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
 
 </body>
 </html>
