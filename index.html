@@ -1,208 +1,193 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CREC | منصة البحوث الجنائية</title>
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>منصة البحوث الجنائية | CREC</title>
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
-
 <style>
 :root {
 --bg: #05070a;
---card: #111418;
+--card: #0d1117;
 --blue: #00adef;
+--glow: rgba(0, 173, 239, 0.5);
 --gold: #c5a059;
---red: #e50914;
 }
 
 body {
 font-family: 'Almarai', sans-serif;
 margin: 0; background: var(--bg); color: white;
-overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+overflow-x: hidden; scroll-behavior: smooth;
 }
 
-/* شاشة الترحيب (Splash) */
-#splash {
-position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-background: var(--bg); z-index: 5000;
-display: flex; flex-direction: column; justify-content: center; align-items: center;
-transition: 0.8s;
+/* القائمة الجانبية (Side Menu) */
+.side-menu {
+position: fixed; top: 0; right: -100%; width: 280px; height: 100%;
+background: rgba(13, 17, 23, 0.98); backdrop-filter: blur(15px);
+z-index: 3000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+padding: 40px 20px; border-left: 1px solid var(--blue);
 }
-.splash-logo { width: 200px; filter: drop-shadow(0 0 15px var(--blue)); animation: pulse 2s infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
+.side-menu.active { right: 0; }
+.menu-item { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; cursor: pointer; display: block; text-decoration: none; }
+.menu-item:hover { color: var(--blue); }
 
 /* الهيدر */
 header {
 display: flex; justify-content: space-between; align-items: center;
 padding: 15px 5%; position: fixed; width: 90%; top: 0;
-background: linear-gradient(to bottom, rgba(5,7,10,0.9), transparent);
-backdrop-filter: blur(8px); z-index: 1000;
+background: linear-gradient(to bottom, var(--bg), transparent);
+z-index: 1000; backdrop-filter: blur(5px);
 }
-.logo-box { display: flex; align-items: center; gap: 10px; }
-.logo-box img { height: 35px; border-radius: 4px; border: 1px solid var(--blue); }
+.logo-box { display: flex; align-items: center; gap: 8px; }
+.logo-box img { height: 35px; border-radius: 4px; box-shadow: 0 0 10px var(--glow); }
 
-/* الغلاف الرئيسي (Hero) */
+/* الغلاف الرئيسي */
 .hero {
-position: relative; height: 80vh; width: 100%;
+position: relative; height: 75vh; width: 100%;
+background: url('hero.jpg') no-repeat center center; background-size: cover;
 display: flex; flex-direction: column; justify-content: flex-end;
-padding: 0 6% 80px; overflow: hidden;
-background: url('hero.jpg') no-repeat center center;
-background-size: cover;
+padding: 0 6% 80px;
 }
 .hero-overlay {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-background: linear-gradient(to top, var(--bg) 15%, transparent 70%);
-z-index: 1;
+background: linear-gradient(to top, var(--bg) 10%, transparent 80%);
 }
 
-.btn-play {
-background: var(--blue); color: white; border: none;
-padding: 14px 35px; border-radius: 10px; font-weight: 800;
-font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px;
-z-index: 10; width: fit-content;
+/* لمسة السحر: الضوء الأزرق خلف الكروت */
+.card-glow {
+position: relative; min-width: 160px; height: 240px;
+border-radius: 15px; overflow: hidden; transition: 0.4s ease;
+box-shadow: 0 0 5px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
 }
-
-/* القوائم المعبأة */
-.section-row { padding: 30px 6% 0; }
-.row-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; border-right: 4px solid var(--blue); padding-right: 12px; }
-
-.slider { display: flex; overflow-x: auto; gap: 15px; scrollbar-width: none; padding-bottom: 10px; }
-.slider::-webkit-scrollbar { display: none; }
-
-.card {
-min-width: 155px; height: 230px; background: var(--card);
-border-radius: 12px; overflow: hidden; position: relative;
-flex-shrink: 0; transition: 0.3s; border: 1px solid #222;
+.card-glow::before {
+content: ''; position: absolute; top: 50%; left: 50%;
+width: 100%; height: 100%; background: var(--blue);
+filter: blur(60px); opacity: 0; transition: 0.4s; z-index: -1;
+transform: translate(-50%, -50%);
 }
-.card img { width: 100%; height: 100%; object-fit: cover; }
-.card-label { position: absolute; bottom: 0; width: 100%; padding: 10px 0; background: rgba(0,0,0,0.7); text-align: center; font-size: 0.8rem; font-weight: 700; }
+.card-glow:hover { transform: scale(1.05); border-color: var(--blue); box-shadow: 0 0 25px var(--glow); }
+.card-glow:hover::before { opacity: 0.4; }
+.card-glow img { width: 100%; height: 100%; object-fit: cover; }
 
-/* شاشة التفاصيل */
-.page-detail {
-position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-background: var(--bg); z-index: 2000; display: none;
-flex-direction: column; overflow-y: auto; animation: slideUp 0.4s ease;
-}
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+/* الأقسام (التبديل بين الصفحات) */
+.app-page { display: none; padding: 100px 5% 120px; animation: fadeIn 0.5s ease; }
+.app-page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.detail-banner { width: 100%; height: 320px; position: relative; }
-.detail-banner img { width: 100%; height: 100%; object-fit: cover; }
-.close-x { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.6); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; }
+/* تصميم قسم البحث */
+.search-bar { background: #1a1e26; border-radius: 12px; padding: 15px; display: flex; gap: 10px; margin-bottom: 25px; border: 1px solid #333; }
+.search-bar input { background: none; border: none; color: white; width: 100%; outline: none; }
 
-/* نفيجيشن */
+/* التنقل السفلي */
 nav {
-position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.96);
-display: flex; justify-content: space-around; padding: 12px 0 20px;
-border-top: 1px solid #1a1a1a; z-index: 1001; backdrop-filter: blur(10px);
+position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.95);
+display: flex; justify-content: space-around; padding: 15px 0 25px;
+border-top: 1px solid #1a1a1a; z-index: 2000; backdrop-filter: blur(10px);
 }
-.nav-link { color: #777; font-size: 0.75rem; text-align: center; text-decoration: none; }
-.nav-link.active { color: var(--blue); font-weight: 800; }
+.nav-item { color: #555; font-size: 0.75rem; text-align: center; cursor: pointer; transition: 0.3s; }
+.nav-item.active { color: var(--blue); filter: drop-shadow(0 0 5px var(--blue)); }
+
 </style>
 </head>
-<body onload="startApp()">
+<body>
 
-<div id="splash">
-<img src="logo.png" class="splash-logo" alt="Logo">
-<h2 style="margin-top:20px; letter-spacing: 4px;">C R E C</h2>
+<div class="side-menu" id="sideMenu">
+<h3 style="color: var(--blue);">الإعدادات</h3>
+<a class="menu-item">المفضلة</a>
+<a class="menu-item">سجل المشاهدة</a>
+<a class="menu-item">سياسة الخصوصية</a>
+<a class="menu-item" onclick="toggleMenu()" style="color: var(--red); margin-top: 50px;">إغلاق القائمة ✕</a>
 </div>
 
 <header>
 <div class="logo-box">
 <img src="logo.png" alt="CREC">
-<div style="font-weight: 800;">C<span>REC</span></div>
+<div style="font-weight: 800; font-size: 1.1rem;">CREC</div>
 </div>
-<div style="font-size: 1.3rem;">☰</div>
+<div style="font-size: 1.5rem; cursor: pointer;" onclick="toggleMenu()">☰</div>
 </header>
 
-<section class="hero">
+<div id="home" class="app-page active">
+<section class="hero" style="margin: -100px -5% 40px; width: 110%;">
 <div class="hero-overlay"></div>
-<div style="z-index: 10;">
-<div style="background:var(--red); display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.7rem; margin-bottom:10px;">إنتاج حصري</div>
-<h1 style="font-size: 2.2rem; margin: 0 0 15px;">معرض النيابة العامة الدولي للكتاب</h1>
-<button class="btn-play" onclick="showPop('معرض الكتاب 2026', 'hero.jpg', 'تغطية شاملة لأحدث إصدارات وفعاليات معرض النيابة العامة الدولي للكتاب بصورة سينمائية.')"> شاهد الآن</button>
+<div style="z-index: 10; padding-right: 5%;">
+<h1 style="font-size: 2.5rem; margin-bottom: 10px;">معرض الكتاب 2026</h1>
+<p style="color: #ccc; margin-bottom: 20px;">استكشف أحدث الوثائقيات والتقارير الميدانية.</p>
+<button style="background: var(--blue); border: none; color: white; padding: 15px 35px; border-radius: 8px; font-weight: 800;"> شاهد الآن</button>
 </div>
 </section>
 
-<div class="section-row">
-<div class="row-title">أحدث البرامج</div>
-<div class="slider">
-<div class="card" onclick="showPop('الملف 404', '2.png', 'وثائقي حصري يكشف كواليس التحقيقات المعقدة.')">
-<img src="2.png"><div class="card-label">الملف 404</div>
-</div>
-<div class="card" onclick="showPop('بودكاست البحوث', 'podcast.jpg', 'حلقات نقاشية مع نخبة من الخبراء في القانون والجريمة.')">
-<img src="podcast.jpg"><div class="card-label">البودكاست</div>
-</div>
-<div class="card" onclick="showPop('الخط الأحمر', 'redline.jpg', 'تغطية ميدانية من قلب الحدث.')">
-<img src="redline.jpg"><div class="card-label">الخط الأحمر</div>
-</div>
+<h3>أحدث البرامج</h3>
+<div style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 0;">
+<div class="card-glow"><img src="redline.jpg"></div>
+<div class="card-glow"><img src="podcast.jpg"></div>
+<div class="card-glow"><img src="2.png"></div>
 </div>
 </div>
 
-<div class="section-row">
-<div class="row-title">السلاسل الوثائقية</div>
-<div class="slider">
-<div class="card" onclick="showPop('التحقيق الميداني', 'redline.jpg', 'سلسلة ميدانية تستعرض مهارات التحقيق.')">
-<img src="redline.jpg"><div class="card-label">التحقيق</div>
+<div id="search" class="app-page">
+<div class="search-bar">
+<span></span>
+<input type="text" placeholder="ابحث عن برنامج، موضوع، أو متحدث...">
 </div>
-<div class="card" onclick="showPop('كواليس المركز', 'logo.png', 'جولة داخل مبنى مركز البحوث والتدريب.')">
-<img src="logo.png"><div class="card-label">داخل المركز</div>
-</div>
-<div class="card" onclick="showPop('الأدلة الجنائية', '2.png', 'كيف تعمل المختبرات الجنائية الحديثة.')">
-<img src="2.png"><div class="card-label">الأدلة</div>
-</div>
+<h3>نتائج مقترحة</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+<div class="card-glow" style="height: 150px;"><img src="hero.jpg"></div>
+<div class="card-glow" style="height: 150px;"><img src="2.png"></div>
 </div>
 </div>
 
-<div class="page-detail" id="popPage">
-<div class="detail-banner">
-<span class="close-x" onclick="hidePop()">✕</span>
-<img id="popImg" src="" alt="">
+<div id="ramadan" class="app-page">
+<h2 style="color: var(--gold); text-align: center; margin-bottom: 30px;"> ليالي رمضان الثقافية</h2>
+<div class="card-glow" style="width: 100%; height: 200px; margin-bottom: 20px;">
+<img src="hero.jpg" style="filter: sepia(0.3);">
+<div style="position: absolute; bottom: 20px; right: 20px; font-weight: 800;">بث مباشر لندوات رمضان</div>
 </div>
-<div style="padding: 25px;">
-<h2 id="popTitle" style="color: var(--blue); font-size: 2rem; margin:0;"></h2>
-<p id="popDesc" style="color: #bbb; line-height: 1.7; margin: 20px 0;"></p>
-<button class="btn-play" style="width: 100%; justify-content: center;"> تشغيل الحلقة</button>
-
-<div style="margin-top: 30px;">
-<h3>الحلقات</h3>
-<div style="display:flex; gap:10px; background:#1a1e24; padding:10px; border-radius:10px; margin-bottom:10px;">
-<img src="hero.jpg" style="width:80px; height:50px; border-radius:5px; object-fit:cover;">
-<div><b>الحلقة 1</b><br><small style="color:var(--blue)">45 دقيقة</small></div>
-</div>
-</div>
+<div style="display: flex; gap: 10px; overflow-x: auto;">
+<div class="card-glow" style="min-width: 120px; height: 180px;"><img src="podcast.jpg"></div>
+<div class="card-glow" style="min-width: 120px; height: 180px;"><img src="redline.jpg"></div>
 </div>
 </div>
 
-<div style="height: 100px;"></div>
+<div id="profile" class="app-page">
+<div style="text-align: center; margin-bottom: 40px;">
+<div style="width: 100px; height: 100px; background: #222; border-radius: 50%; margin: 0 auto 15px; border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; font-size: 2rem;"></div>
+<h2>محمد علي</h2>
+<p style="color: var(--blue);">مصور فوتوغرافي ومونتاج</p>
+</div>
+<div class="menu-item"> إعدادات الحساب</div>
+<div class="menu-item"> الفيديوهات المحملة</div>
+<div class="menu-item"> قائمة المفضلة</div>
+</div>
 
 <nav>
-<a class="nav-link active"><br>الرئيسية</a>
-<a class="nav-link"><br>البحث</a>
-<a class="nav-link" style="color: var(--gold);"><br>رمضان</a>
-<a class="nav-link"><br>حسابي</a>
+<div class="nav-item active" onclick="switchPage('home', this)"><br>الرئيسية</div>
+<div class="nav-item" onclick="switchPage('search', this)"><br>البحث</div>
+<div class="nav-item" onclick="switchPage('ramadan', this)"><br>رمضان</div>
+<div class="nav-item" onclick="switchPage('profile', this)"><br>حسابي</div>
 </nav>
 
 <script>
-function startApp() {
-setTimeout(() => {
-document.getElementById('splash').style.opacity = '0';
-setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 800);
-}, 2500);
+function toggleMenu() {
+document.getElementById('sideMenu').classList.toggle('active');
 }
 
-function showPop(t, i, d) {
-document.getElementById('popTitle').innerText = t;
-document.getElementById('popImg').src = i;
-document.getElementById('popDesc').innerText = d;
-document.getElementById('popPage').style.display = 'flex';
-}
+function switchPage(pageId, element) {
+// إخفاء كل الصفحات
+document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
+// إظهار الصفحة المطلوبة
+document.getElementById(pageId).classList.add('active');
 
-function hidePop() {
-document.getElementById('popPage').style.display = 'none';
+// تغيير حالة أيقونات التنقل
+document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+element.classList.add('active');
+
+// إغلاق القائمة الجانبية إذا كانت مفتوحة
+document.getElementById('sideMenu').classList.remove('active');
+window.scrollTo(0,0);
 }
 </script>
+
 </body>
 </html>
