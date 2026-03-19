@@ -59,7 +59,7 @@
             padding: 0 5% 60px;
         }
 
-        /* خلفية الفيديو - تأكد من رفع ملف باسم video.mp4 */
+        /* الرابط المباشر الجديد للفيديو من Drive */
         #bg-video {
             position: absolute;
             top: 50%;
@@ -71,7 +71,6 @@
             object-fit: cover;
         }
 
-        /* صورة بديلة في حال لم يعمل الفيديو */
         .hero-fallback {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -86,7 +85,7 @@
             z-index: -1;
         }
 
-        .hero h1 { font-size: 2.8rem; margin: 0; font-weight: 800; }
+        .hero h1 { font-size: 2.8rem; margin: 0; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
         .hero p { font-size: 1.1rem; color: #eee; max-width: 550px; margin: 15px 0; }
 
         .btn-watch {
@@ -156,7 +155,7 @@
 
     <section class="hero">
         <video autoplay muted loop playsinline id="bg-video">
-            <source src="video.mp4" type="video/mp4">
+            <source src="https://drive.google.com/uc?export=download&id=1pRe_UHdrCDTt3WCVbWHsNQVuHDdd959i" type="video/mp4">
         </video>
         <div class="hero-fallback"></div>
         <div class="video-overlay"></div>
