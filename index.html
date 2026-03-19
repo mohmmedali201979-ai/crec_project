@@ -1,17 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>منصة البحوث الجنائية | CREC</title>
+<title>CREC PREMIUM</title>
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
 --bg: #05070a;
 --card: #0d1117;
 --blue: #00adef;
---glow: rgba(0, 173, 239, 0.5);
+--glow: rgba(0, 173, 239, 0.6);
 --gold: #c5a059;
 }
 
@@ -21,173 +20,171 @@ margin: 0; background: var(--bg); color: white;
 overflow-x: hidden; scroll-behavior: smooth;
 }
 
-/* القائمة الجانبية (Side Menu) */
+/* القائمة الجانبية */
 .side-menu {
 position: fixed; top: 0; right: -100%; width: 280px; height: 100%;
-background: rgba(13, 17, 23, 0.98); backdrop-filter: blur(15px);
-z-index: 3000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-padding: 40px 20px; border-left: 1px solid var(--blue);
+background: rgba(13, 17, 23, 0.98); backdrop-filter: blur(20px);
+z-index: 4000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+padding: 40px 20px; border-left: 2px solid var(--blue);
 }
 .side-menu.active { right: 0; }
-.menu-item { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; cursor: pointer; display: block; text-decoration: none; }
-.menu-item:hover { color: var(--blue); }
 
-/* الهيدر */
+/* الهيدر الزجاجي */
 header {
 display: flex; justify-content: space-between; align-items: center;
 padding: 15px 5%; position: fixed; width: 90%; top: 0;
-background: linear-gradient(to bottom, var(--bg), transparent);
-z-index: 1000; backdrop-filter: blur(5px);
+background: linear-gradient(to bottom, rgba(5,7,10,0.95), transparent);
+z-index: 1000; backdrop-filter: blur(10px);
 }
 .logo-box { display: flex; align-items: center; gap: 8px; }
-.logo-box img { height: 35px; border-radius: 4px; box-shadow: 0 0 10px var(--glow); }
+.logo-box img { height: 35px; border-radius: 5px; box-shadow: 0 0 15px var(--glow); }
 
-/* الغلاف الرئيسي */
-.hero {
-position: relative; height: 75vh; width: 100%;
-background: url('hero.jpg') no-repeat center center; background-size: cover;
-display: flex; flex-direction: column; justify-content: flex-end;
-padding: 0 6% 80px;
-}
-.hero-overlay {
-position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-background: linear-gradient(to top, var(--bg) 10%, transparent 80%);
-}
-
-/* لمسة السحر: الضوء الأزرق خلف الكروت */
+/* لمسة الضوء الأزرق السحرية خلف الصور */
 .card-glow {
-position: relative; min-width: 160px; height: 240px;
-border-radius: 15px; overflow: hidden; transition: 0.4s ease;
-box-shadow: 0 0 5px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
+position: relative; min-width: 140px; height: 210px;
+border-radius: 12px; overflow: hidden; transition: 0.4s ease;
+border: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;
 }
-.card-glow::before {
+.card-glow::after {
 content: ''; position: absolute; top: 50%; left: 50%;
-width: 100%; height: 100%; background: var(--blue);
-filter: blur(60px); opacity: 0; transition: 0.4s; z-index: -1;
+width: 80%; height: 80%; background: var(--blue);
+filter: blur(50px); opacity: 0; transition: 0.4s; z-index: -1;
 transform: translate(-50%, -50%);
 }
-.card-glow:hover { transform: scale(1.05); border-color: var(--blue); box-shadow: 0 0 25px var(--glow); }
-.card-glow:hover::before { opacity: 0.4; }
+.card-glow:hover { transform: scale(1.08); border-color: var(--blue); box-shadow: 0 0 20px var(--glow); }
+.card-glow:hover::after { opacity: 0.5; }
 .card-glow img { width: 100%; height: 100%; object-fit: cover; }
 
-/* الأقسام (التبديل بين الصفحات) */
-.app-page { display: none; padding: 100px 5% 120px; animation: fadeIn 0.5s ease; }
+/* الصفحات */
+.app-page { display: none; padding: 80px 5% 120px; animation: fadeIn 0.4s ease; }
 .app-page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* تصميم قسم البحث */
-.search-bar { background: #1a1e26; border-radius: 12px; padding: 15px; display: flex; gap: 10px; margin-bottom: 25px; border: 1px solid #333; }
-.search-bar input { background: none; border: none; color: white; width: 100%; outline: none; }
-
-/* التنقل السفلي */
-nav {
-position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.95);
-display: flex; justify-content: space-around; padding: 15px 0 25px;
-border-top: 1px solid #1a1a1a; z-index: 2000; backdrop-filter: blur(10px);
+/* غلاف هيرو ممتلئ */
+.hero {
+position: relative; height: 70vh; width: 105%; margin-left: -5%;
+background: url('hero.jpg') no-repeat center center; background-size: cover;
+display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 50px;
 }
-.nav-item { color: #555; font-size: 0.75rem; text-align: center; cursor: pointer; transition: 0.3s; }
-.nav-item.active { color: var(--blue); filter: drop-shadow(0 0 5px var(--blue)); }
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--bg) 10%, transparent 90%); }
+
+/* التنسيق العام للقوائم */
+.section-title { font-size: 1.1rem; font-weight: 800; margin: 25px 0 15px; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 4px; height: 18px; background: var(--blue); border-radius: 2px; }
+.scroller { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 5px 0; }
+.scroller::-webkit-scrollbar { display: none; }
+
+/* نفيجيشن سفلي */
+nav {
+position: fixed; bottom: 0; width: 100%; background: rgba(5,7,10,0.98);
+display: flex; justify-content: space-around; padding: 12px 0 25px;
+border-top: 1px solid #1a1a1a; z-index: 2000; backdrop-filter: blur(15px);
+}
+.nav-item { color: #555; font-size: 0.7rem; text-align: center; cursor: pointer; }
+.nav-item.active { color: var(--blue); font-weight: 800; }
 
 </style>
 </head>
-<body>
+<body onload="initApp()">
 
 <div class="side-menu" id="sideMenu">
-<h3 style="color: var(--blue);">الإعدادات</h3>
-<a class="menu-item">المفضلة</a>
-<a class="menu-item">سجل المشاهدة</a>
-<a class="menu-item">سياسة الخصوصية</a>
-<a class="menu-item" onclick="toggleMenu()" style="color: var(--red); margin-top: 50px;">إغلاق القائمة ✕</a>
+<h2 style="color: var(--blue);">القائمة</h2>
+<div style="margin-top: 30px;">
+<p onclick="toggleMenu()"> الرئيسية</p>
+<p onclick="toggleMenu()"> المفضلة</p>
+<p onclick="toggleMenu()"> المحملات</p>
+<p onclick="toggleMenu()"> الإعدادات</p>
+<hr style="opacity: 0.1;">
+<p onclick="toggleMenu()" style="color: var(--red);">تسجيل الخروج</p>
+</div>
 </div>
 
 <header>
 <div class="logo-box">
 <img src="logo.png" alt="CREC">
-<div style="font-weight: 800; font-size: 1.1rem;">CREC</div>
+<div style="font-weight: 800;">CREC <span>PREMIUM</span></div>
 </div>
-<div style="font-size: 1.5rem; cursor: pointer;" onclick="toggleMenu()">☰</div>
+<div onclick="toggleMenu()" style="cursor: pointer; font-size: 1.5rem;">☰</div>
 </header>
 
 <div id="home" class="app-page active">
-<section class="hero" style="margin: -100px -5% 40px; width: 110%;">
+<div class="hero">
 <div class="hero-overlay"></div>
-<div style="z-index: 10; padding-right: 5%;">
-<h1 style="font-size: 2.5rem; margin-bottom: 10px;">معرض الكتاب 2026</h1>
-<p style="color: #ccc; margin-bottom: 20px;">استكشف أحدث الوثائقيات والتقارير الميدانية.</p>
-<button style="background: var(--blue); border: none; color: white; padding: 15px 35px; border-radius: 8px; font-weight: 800;"> شاهد الآن</button>
+<div style="z-index: 10; padding: 0 6%;">
+<h1 style="font-size: 2.2rem; margin-bottom: 5px;">ليالي رمضان الثقافية</h1>
+<p style="color: #ccc; margin-bottom: 20px;">تغطية حصرية لفعاليات مركز البحوث.</p>
+<button style="background: var(--blue); border: none; color: white; padding: 12px 30px; border-radius: 8px; font-weight: 800;"> شاهد الآن</button>
 </div>
-</section>
+</div>
 
-<h3>أحدث البرامج</h3>
-<div style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 0;">
+<div class="section-title">أحدث الإضافات</div>
+<div class="scroller">
 <div class="card-glow"><img src="redline.jpg"></div>
-<div class="card-glow"><img src="podcast.jpg"></div>
 <div class="card-glow"><img src="2.png"></div>
+<div class="card-glow"><img src="podcast.jpg"></div>
+<div class="card-glow"><img src="hero.jpg"></div>
+</div>
+
+<div class="section-title">برامج الوثائقيات</div>
+<div class="scroller">
+<div class="card-glow"><img src="2.png"></div>
+<div class="card-glow"><img src="hero.jpg"></div>
+<div class="card-glow"><img src="redline.jpg"></div>
 </div>
 </div>
 
 <div id="search" class="app-page">
-<div class="search-bar">
-<span></span>
-<input type="text" placeholder="ابحث عن برنامج، موضوع، أو متحدث...">
-</div>
-<h3>نتائج مقترحة</h3>
+<div style="background: #161a21; padding: 15px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #333;"> ابحث عن العناوين...</div>
+<div class="section-title">الأكثر بحثاً</div>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-<div class="card-glow" style="height: 150px;"><img src="hero.jpg"></div>
-<div class="card-glow" style="height: 150px;"><img src="2.png"></div>
+<div class="card-glow" style="height: 120px;"><img src="redline.jpg"></div>
+<div class="card-glow" style="height: 120px;"><img src="podcast.jpg"></div>
+<div class="card-glow" style="height: 120px;"><img src="2.png"></div>
+<div class="card-glow" style="height: 120px;"><img src="hero.jpg"></div>
 </div>
 </div>
 
 <div id="ramadan" class="app-page">
-<h2 style="color: var(--gold); text-align: center; margin-bottom: 30px;"> ليالي رمضان الثقافية</h2>
-<div class="card-glow" style="width: 100%; height: 200px; margin-bottom: 20px;">
-<img src="hero.jpg" style="filter: sepia(0.3);">
-<div style="position: absolute; bottom: 20px; right: 20px; font-weight: 800;">بث مباشر لندوات رمضان</div>
-</div>
-<div style="display: flex; gap: 10px; overflow-x: auto;">
-<div class="card-glow" style="min-width: 120px; height: 180px;"><img src="podcast.jpg"></div>
-<div class="card-glow" style="min-width: 120px; height: 180px;"><img src="redline.jpg"></div>
+<h2 style="color: var(--gold); text-align: center;"> خيمة رمضان الرقمية</h2>
+<div class="card-glow" style="width: 100%; height: 180px; margin: 20px 0;"><img src="hero.jpg"></div>
+<div class="section-title">ندوات دينية وقانونية</div>
+<div class="scroller">
+<div class="card-glow"><img src="podcast.jpg"></div>
+<div class="card-glow"><img src="redline.jpg"></div>
+<div class="card-glow"><img src="2.png"></div>
 </div>
 </div>
 
 <div id="profile" class="app-page">
 <div style="text-align: center; margin-bottom: 40px;">
-<div style="width: 100px; height: 100px; background: #222; border-radius: 50%; margin: 0 auto 15px; border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; font-size: 2rem;"></div>
-<h2>محمد علي</h2>
-<p style="color: var(--blue);">مصور فوتوغرافي ومونتاج</p>
+<div style="width: 80px; height: 80px; background: #222; border-radius: 50%; margin: 0 auto 10px; border: 2px solid var(--blue); padding: 5px;"><img src="logo.png" style="width: 100%; border-radius: 50%;"></div>
+<h3>محمد علي</h3>
+<span style="color: var(--blue); font-size: 0.8rem;">عضوية بريميوم</span>
 </div>
-<div class="menu-item"> إعدادات الحساب</div>
-<div class="menu-item"> الفيديوهات المحملة</div>
-<div class="menu-item"> قائمة المفضلة</div>
+<div class="section-title">قائمة المشاهدة اللاحقة</div>
+<div class="scroller">
+<div class="card-glow"><img src="hero.jpg"></div>
+<div class="card-glow"><img src="2.png"></div>
+</div>
 </div>
 
 <nav>
-<div class="nav-item active" onclick="switchPage('home', this)"><br>الرئيسية</div>
-<div class="nav-item" onclick="switchPage('search', this)"><br>البحث</div>
-<div class="nav-item" onclick="switchPage('ramadan', this)"><br>رمضان</div>
-<div class="nav-item" onclick="switchPage('profile', this)"><br>حسابي</div>
+<div class="nav-item active" onclick="go('home', this)"><br>الرئيسية</div>
+<div class="nav-item" onclick="go('search', this)"><br>البحث</div>
+<div class="nav-item" onclick="go('ramadan', this)"><br>رمضان</div>
+<div class="nav-item" onclick="go('profile', this)"><br>حسابي</div>
 </nav>
 
 <script>
-function toggleMenu() {
-document.getElementById('sideMenu').classList.toggle('active');
-}
-
-function switchPage(pageId, element) {
-// إخفاء كل الصفحات
+function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
+function go(id, el) {
 document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
-// إظهار الصفحة المطلوبة
-document.getElementById(pageId).classList.add('active');
-
-// تغيير حالة أيقونات التنقل
+document.getElementById(id).classList.add('active');
 document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-element.classList.add('active');
-
-// إغلاق القائمة الجانبية إذا كانت مفتوحة
-document.getElementById('sideMenu').classList.remove('active');
+el.classList.add('active');
 window.scrollTo(0,0);
 }
+function initApp() { console.log("CREC App Ready"); }
 </script>
-
 </body>
 </html>
