@@ -1,169 +1,265 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CREC PREMIUM</title>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg: #05070a; --blue: #00adef; --glow: rgba(0, 173, 239, 0.6); --gold: #c5a059; }
-        
-        body { font-family: 'Almarai', sans-serif; margin: 0; background: var(--bg); color: white; overflow-x: hidden; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CREC PREMIUM | منصة البحوث الجنائية</title>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg-color: #05070a;
+--card-bg: #12161d;
+--primary-blue: #00adef;
+--accent-glow: rgba(0, 173, 239, 0.4);
+--text-gray: #a0a0a0;
+--ramadan-gold: #c5a059;
+}
 
-        /* تأثير النيون المتحرك خلف المبنى */
-        @keyframes neonPulse {
-            0%, 100% { filter: drop-shadow(0 0 10px var(--glow)); }
-            50% { filter: drop-shadow(0 0 30px var(--blue)); }
-        }
+body {
+font-family: 'Almarai', sans-serif;
+margin: 0; background-color: var(--bg-color); color: white;
+overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+}
 
-        /* الهيدر */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; position: fixed; width: 90%; top: 0; background: rgba(5,7,10,0.9); backdrop-filter: blur(10px); z-index: 5000; }
-        .logo-header { display: flex; align-items: center; gap: 8px; }
-        .logo-header img { height: 35px; width: 35px; border-radius: 50%; border: 1px solid var(--blue); }
+/* --- الهيدر الاحترافي --- */
+header {
+position: fixed; top: 0; width: 100%; height: 60px;
+background: rgba(5, 7, 10, 0.95); backdrop-filter: blur(15px);
+display: flex; justify-content: space-between; align-items: center;
+padding: 0 20px; box-sizing: border-box; z-index: 1000;
+border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.header-right { display: flex; align-items: center; gap: 12px; }
+.header-right img { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid var(--primary-blue); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.live-btn { background: #e50914; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        /* المنيو الجانبية */
-        #sideMenu { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: #0d1117; z-index: 6000; transition: 0.4s; padding: 40px 20px; border-left: 2px solid var(--blue); }
-        .menu-item { padding: 15px; border-bottom: 1px solid #222; color: #ccc; cursor: pointer; display: block; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* الواجهة الرئيسية */
-        .hero { position: relative; height: 75vh; width: 100%; background: url('logo.png') no-repeat center center; background-size: cover; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 50px; animation: neonPulse 3s infinite; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--bg) 10%, transparent 90%); }
+/* --- القائمة الجانبية (Drawer) --- */
+#sideMenu {
+position: fixed; top: 0; right: -100%; width: 85%; max-width: 320px; height: 100%;
+background: var(--card-bg); z-index: 2000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+padding: 60px 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+}
+#sideMenu.open { right: 0; }
+.menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; }
+.menu-item { padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 15px; font-size: 1.1rem; cursor: pointer; }
 
-        /* نظام الصفحات */
-        .app-page { display: none; padding-bottom: 100px; animation: fadeIn 0.3s; }
-        .app-page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* --- الواجهة الرئيسية (Hero Section) --- */
+.hero-section {
+position: relative; width: 100%; height: 85vh;
+background: url('logo.png') no-repeat center top; background-size: cover;
+display: flex; flex-direction: column; justify-content: flex-end; padding: 40px 25px; box-sizing: border-box;
+animation: neonGlow 4s infinite alternate;
+}
+@keyframes neonGlow {
+from { filter: drop-shadow(0 0 5px var(--accent-glow)); }
+to { filter: drop-shadow(0 0 25px var(--primary-blue)); }
+}
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--bg-color) 15%, transparent 70%); }
+.hero-content { z-index: 10; max-width: 500px; }
+.hero-content h1 { font-size: 2.2rem; margin: 0; font-weight: 800; line-height: 1.2; }
+.hero-content p { color: #ccc; margin: 15px 0 25px; font-size: 0.95rem; line-height: 1.5; }
+.btn-play { background: var(--primary-blue); color: white; border: none; padding: 14px 35px; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; }
 
-        /* الكروت والجماليات */
-        .title { padding: 20px 5% 10px; font-size: 1.2rem; font-weight: 800; color: var(--blue); }
-        .scroller { display: flex; overflow-x: auto; padding: 0 5%; gap: 15px; }
-        .card-glow { min-width: 150px; height: 220px; border-radius: 15px; overflow: hidden; border: 1px solid #222; flex-shrink: 0; transition: 0.3s; }
-        .card-glow:hover { border-color: var(--blue); box-shadow: 0 0 20px var(--glow); }
-        .card-glow img { width: 100%; height: 100%; object-fit: cover; }
+/* --- أقسام المحتوى (Sliders) --- */
+.section-container { margin-top: 30px; padding-bottom: 20px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-bottom: 15px; }
+.section-title { font-size: 1.3rem; font-weight: 800; border-right: 4px solid var(--primary-blue); padding-right: 12px; }
+.see-all { color: var(--primary-blue); font-size: 0.85rem; }
 
-        /* نفيجيشن سفلي */
-        nav { position: fixed; bottom: 0; width: 100%; background: #05070a; display: flex; justify-content: space-around; padding: 15px 0 25px; border-top: 1px solid #222; z-index: 4000; }
-        .nav-btn { color: #555; font-size: 0.75rem; text-align: center; cursor: pointer; border: none; background: none; }
-        .nav-btn.active { color: var(--blue); font-weight: 800; }
+.content-slider { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px; scrollbar-width: none; }
+.content-slider::-webkit-scrollbar { display: none; }
 
-        /* مشغل الفيديو */
-        #videoContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        iframe { width: 100%; aspect-ratio: 16/9; border: none; }
-    </style>
+.card {
+min-width: 160px; height: 240px; border-radius: 12px; overflow: hidden;
+position: relative; background: #1a1e26; flex-shrink: 0; transition: 0.3s;
+}
+.card img { width: 100%; height: 100%; object-fit: cover; }
+.card-info { position: absolute; bottom: 0; width: 100%; padding: 10px; background: linear-gradient(to top, black, transparent); box-sizing: border-box; }
+.card-title { font-size: 0.85rem; font-weight: bold; }
+
+/* --- الصفحات (Pages) --- */
+.page { display: none; padding-top: 60px; min-height: 100vh; animation: fadeEffect 0.4s; }
+.page.active { display: block; }
+@keyframes fadeEffect { from { opacity: 0; } to { opacity: 1; } }
+
+/* صفحة البحث */
+.search-bar { margin: 20px; background: #1a1e26; padding: 15px; border-radius: 12px; border: 1px solid #333; color: #777; }
+.search-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; }
+
+/* --- النفيجيشن السفلي (الشبيه بالجزيرة) --- */
+nav {
+position: fixed; bottom: 0; width: 100%; height: 75px;
+background: rgba(5, 7, 10, 0.98); border-top: 1px solid rgba(255,255,255,0.08);
+display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding-bottom: 15px;
+}
+.nav-item { color: #666; text-align: center; cursor: pointer; transition: 0.3s; flex: 1; }
+.nav-item.active { color: var(--primary-blue); }
+.nav-item i { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+.nav-item span { font-size: 0.75rem; font-weight: bold; }
+
+/* مشغل الفيديو */
+#videoPlayer { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; flex-direction: column; }
+.close-vid { padding: 20px; color: white; font-size: 1.2rem; cursor: pointer; text-align: left; }
+iframe { width: 100%; aspect-ratio: 16/9; margin-top: auto; margin-bottom: auto; }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-header">
-            <img src="hero.jpg">
-            <span style="font-weight: 800;">CREC PREMIUM</span>
-        </div>
-        <div onclick="openNav()" style="font-size: 1.8rem; cursor: pointer;">☰</div>
-    </header>
+<header>
+<div class="header-right">
+<img src="hero.jpg" alt="User">
+<div style="font-weight: 800; font-size: 0.9rem;">CREC PREMIUM</div>
+</div>
+<div class="header-left">
+<div class="live-btn">البث المباشر (8)</div>
+<div onclick="toggleMenu()" style="font-size: 1.8rem; cursor: pointer;">☰</div>
+</div>
+</header>
 
-    <div id="sideMenu">
-        <div onclick="closeNav()" style="font-size: 1.5rem; margin-bottom: 30px; cursor: pointer;">✕ إغلاق</div>
-        <div class="menu-item">⭐ المفضلة</div>
-        <div class="menu-item">📥 المحملات</div>
-        <div class="menu-item">⚙️ الإعدادات</div>
-    </div>
+<div class="menu-overlay" id="overlay" onclick="toggleMenu()"></div>
+<div id="sideMenu">
+<div style="font-size: 1.5rem; margin-bottom: 30px;" onclick="toggleMenu()">✕</div>
+<div class="menu-item"> قائمة المفضلة</div>
+<div class="menu-item"> التنزيلات</div>
+<div class="menu-item"> التنبيهات</div>
+<div class="menu-item"> إعدادات الحساب</div>
+<div class="menu-item" style="color: #e50914; margin-top: 40px;"> تسجيل الخروج</div>
+</div>
 
-    <div id="home" class="app-page active">
-        <div class="hero">
-            <div class="hero-overlay"></div>
-            <div style="z-index: 10; padding: 0 8%;">
-                <h1 style="font-size: 2.2rem; margin: 0;">مركز البحوث والتدريب</h1>
-                <p style="color: #bbb;">المنصة الرقمية للعلوم الجنائية 2026</p>
-                <button onclick="playVideo('https://www.youtube.com/embed/ScMzIvxBSi4')" style="background: var(--blue); border: none; color: white; padding: 12px 30px; border-radius: 8px; font-weight: 800; cursor: pointer;">▶ شاهد العرض</button>
-            </div>
-        </div>
-        <div class="title">أحدث التقارير المصورة</div>
-        <div class="scroller">
-            <div class="card-glow" onclick="playVideo('...')"><img src="redline.jpg"></div>
-            <div class="card-glow" onclick="playVideo('...')"><img src="2.png"></div>
-            <div class="card-glow" onclick="playVideo('...')"><img src="podcast.jpg"></div>
-        </div>
-    </div>
+<main id="page-home" class="page active">
+<section class="hero-section">
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<span style="color: var(--primary-blue); font-weight: bold;">مبنى المركز الرئيسي</span>
+<h1>مركز البحوث والتدريب الجنائي</h1>
+<p>نظام ذكي متكامل لإدارة وتحليل البيانات الجنائية لعام 2026. المنصة الأكبر في المنطقة.</p>
+<button class="btn-play" onclick="openPlayer('https://www.youtube.com/embed/ScMzIvxBSi4')"> استكشف الآن</button>
+</div>
+</section>
 
-    <div id="search" class="app-page" style="padding-top: 100px;">
-        <div style="margin: 0 5%; background: #1a1e26; padding: 15px; border-radius: 10px; border: 1px solid #333;">🔍 ابحث في المركز...</div>
-        <div class="title">نتائج مقترحة</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 5%;">
-            <div class="card-glow" style="min-width: unset; height: 130px;"><img src="2.png"></div>
-            <div class="card-glow" style="min-width: unset; height: 130px;"><img src="redline.jpg"></div>
-            <div class="card-glow" style="min-width: unset; height: 130px;"><img src="hero.jpg"></div>
-            <div class="card-glow" style="min-width: unset; height: 130px;"><img src="podcast.jpg"></div>
-        </div>
-    </div>
+<div class="section-container">
+<div class="section-header">
+<div class="section-title">أحدث البرامج</div>
+<div class="see-all">عرض الكل</div>
+</div>
+<div class="content-slider">
+<div class="card" onclick="openPlayer()"><img src="redline.jpg"><div class="card-info"><div class="card-title">الخط الأحمر</div></div></div>
+<div class="card" onclick="openPlayer()"><img src="2.png"><div class="card-info"><div class="card-title">الملف 404</div></div></div>
+<div class="card" onclick="openPlayer()"><img src="podcast.jpg"><div class="card-info"><div class="card-title">البودكاست الجنائي</div></div></div>
+<div class="card" onclick="openPlayer()"><img src="hero.jpg"><div class="card-info"><div class="card-title">داخل المركز</div></div></div>
+</div>
+</div>
 
-    <div id="ramadan" class="app-page" style="padding-top: 100px;">
-        <h2 style="color: var(--gold); text-align: center;">🌙 ليالي رمضان 2026</h2>
-        <div class="card-glow" style="width: 90%; height: 200px; margin: 20px auto;"><img src="hero.jpg"></div>
-        <div class="title">ندوات ولقاءات ممتلئة</div>
-        <div class="scroller">
-            <div class="card-glow"><img src="podcast.jpg"></div>
-            <div class="card-glow"><img src="redline.jpg"></div>
-            <div class="card-glow"><img src="2.png"></div>
-        </div>
-    </div>
+<div class="section-container">
+<div class="section-header">
+<div class="section-title">السلاسل الوثائقية</div>
+</div>
+<div class="content-slider">
+<div class="card"><img src="podcast.jpg"><div class="card-info"><div class="card-title">التحقيق</div></div></div>
+<div class="card"><img src="redline.jpg"><div class="card-info"><div class="card-title">الأدلة الجنائية</div></div></div>
+</div>
+</div>
+</main>
 
-    <div id="profile" class="app-page" style="padding-top: 100px; text-align: center;">
-        <div style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--blue); margin: 0 auto 15px; overflow: hidden;"><img src="hero.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
-        <h3>محمد علي</h3>
-        <p style="color: var(--blue);">مصور ومخرج فني محترف</p>
-        <div style="padding: 20px; text-align: right;">
-            <div class="menu-item">⚙️ إعدادات الحساب</div>
-            <div class="menu-item">📂 ملفاتي المحملة</div>
-        </div>
-    </div>
+<div id="page-search" class="page">
+<div class="search-bar"> ابحث عن فيديو، برنامج، أو قضية...</div>
+<div class="section-header"><div class="section-title">الأقسام</div></div>
+<div class="search-grid">
+<div class="card" style="height: 120px;"><img src="2.png"><div class="card-info">الأدلة</div></div>
+<div class="card" style="height: 120px;"><img src="redline.jpg"><div class="card-info">وثائقي</div></div>
+<div class="card" style="height: 120px;"><img src="podcast.jpg"><div class="card-info">بودكاست</div></div>
+<div class="card" style="height: 120px;"><img src="hero.jpg"><div class="card-info">ندوات</div></div>
+</div>
+</div>
 
-    <div id="videoContainer">
-        <button onclick="closeVideo()" style="background: var(--blue); color: white; border: none; padding: 10px 20px; margin-bottom: 10px; cursor: pointer;">إغلاق ✕</button>
-        <div id="vidArea" style="width: 100%;"></div>
-    </div>
+<div id="page-ramadan" class="page">
+<div style="padding: 40px 20px; text-align: center; background: linear-gradient(var(--ramadan-gold), transparent);">
+<h1 style="color: white; margin: 0;"> ليالي رمضان 2026</h1>
+<p>تغطية خاصة لندوات المركز الرمضانية</p>
+</div>
+<div class="section-header"><div class="section-title">ندوات حصرية</div></div>
+<div class="content-slider">
+<div class="card"><img src="hero.jpg"><div class="card-info">لقاء خاص</div></div>
+<div class="card"><img src="podcast.jpg"><div class="card-info">في رحاب العلم</div></div>
+</div>
+</div>
 
-    <nav>
-        <div class="nav-btn active" onclick="showPage('home', this)"><br>الرئيسية</div>
-        <div class="nav-btn" onclick="showPage('search', this)"><br>البحث</div>
-        <div class="nav-btn" onclick="showPage('ramadan', this)"><br>رمضان</div>
-        <div class="nav-btn" onclick="showPage('profile', this)"><br>حسابي</div>
-    </nav>
+<div id="page-profile" class="page">
+<div style="padding: 50px 20px; text-align: center;">
+<div style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--primary-blue); margin: 0 auto 20px; overflow: hidden;">
+<img src="hero.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+<h2>محمد علي</h2>
+<p style="color: var(--primary-blue);">مصور ومخرج فني | CREC</p>
+</div>
+<div style="padding: 0 20px;">
+<div class="menu-item"> أعمالي المنشورة</div>
+<div class="menu-item"> إعدادات الخصوصية</div>
+<div class="menu-item"> إحصائيات المشاهدة</div>
+</div>
+</div>
 
-    <script>
-        // دالة التنقل بين الصفحات
-        function showPage(pageId, btn) {
-            // إخفاء كل الصفحات أولاً
-            var pages = document.getElementsByClassName('app-page');
-            for (var i = 0; i < pages.length; i++) {
-                pages[i].style.display = 'none';
-            }
-            // إظهار الصفحة المطلوبة
-            document.getElementById(pageId).style.display = 'block';
+<div id="videoPlayer">
+<div class="close-vid" onclick="closePlayer()">✕ إغلاق المشغل</div>
+<div id="videoContainer"></div>
+</div>
 
-            // تحديث شكل الأزرار
-            var btns = document.getElementsByClassName('nav-btn');
-            for (var j = 0; j < btns.length; j++) {
-                btns[j].classList.remove('active');
-            }
-            btn.classList.add('active');
-            
-            closeNav(); // إغلاق المنيو إذا كانت مفتوحة
-            window.scrollTo(0, 0);
-        }
+<nav>
+<div class="nav-item active" onclick="switchTab('home', this)">
+<i></i><span>الرئيسية</span>
+</div>
+<div class="nav-item" onclick="switchTab('search', this)">
+<i></i><span>تصفح</span>
+</div>
+<div class="nav-item" onclick="switchTab('ramadan', this)">
+<i></i><span>عيد الفطر</span>
+</div>
+<div class="nav-item" onclick="switchTab('profile', this)">
+<i></i><span>حسابي</span>
+</div>
+</nav>
 
-        // دالة المنيو الجانبية
-        function openNav() { document.getElementById('sideMenu').style.right = '0'; }
-        function closeNav() { document.getElementById('sideMenu').style.right = '-100%'; }
+<script>
+// دالة التنقل بين الصفحات
+function switchTab(pageId, element) {
+// إخفاء كل الصفحات
+const pages = document.querySelectorAll('.page');
+pages.forEach(p => p.classList.remove('active'));
 
-        // دالة تشغيل الفيديو
-        function playVideo(url) {
-            document.getElementById('vidArea').innerHTML = '<iframe src="'+url+'" allowfullscreen></iframe>';
-            document.getElementById('videoContainer').style.display = 'flex';
-        }
-        function closeVideo() {
-            document.getElementById('vidArea').innerHTML = '';
-            document.getElementById('videoContainer').style.display = 'none';
-        }
-    </script>
+// إظهار الصفحة المختارة
+document.getElementById('page-' + pageId).classList.add('active');
+
+// تحديث شكل الأزرار
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(n => n.classList.remove('active'));
+element.classList.add('active');
+
+window.scrollTo(0, 0);
+}
+
+// دالة فتح وإغلاق المنيو
+function toggleMenu() {
+const menu = document.getElementById('sideMenu');
+const overlay = document.getElementById('overlay');
+menu.classList.toggle('open');
+overlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
+}
+
+// دالة مشغل الفيديو
+function openPlayer(url) {
+const container = document.getElementById('videoContainer');
+const videoUrl = url || 'https://www.youtube.com/embed/ScMzIvxBSi4';
+container.innerHTML = <iframe src="${videoUrl}?autoplay=1" allow="autoplay; fullscreen"></iframe>;
+document.getElementById('videoPlayer').style.display = 'flex';
+}
+
+function closePlayer() {
+document.getElementById('videoContainer').innerHTML = '';
+document.getElementById('videoPlayer').style.display = 'none';
+}
+</script>
 </body>
 </html>
